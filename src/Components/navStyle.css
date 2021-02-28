@@ -1,0 +1,73 @@
+.navbar{
+    /* style={{color:'black', backgroundColor:'#003542', marginTop:'105px', height:'55px'}} */
+    color:black;
+    background-color: #003542;
+    /* display:flex; */
+    height: 55px;
+    margin-top: -7%;
+    position: fixed;
+    width: 100%;
+}
+.activeNav{
+    margin-top: -14%;
+}
+.title2{
+    margin-left: 20%;
+}
+.smallLogo{
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-left: 10%;
+    display:default;
+    margin-top: 1%;
+}
+
+.companySubTitle{
+    display: flex;
+}
+
+.mainHeader{
+    background-color: white;
+    height: 16%;
+    display: flex;
+    position: fixed;
+    width: 100%;
+    margin-top: -15%;
+}
+
+.invisible{
+    display: none;
+}
+
+.topBlankSpace{
+    width: 100%;
+    background-color: white;
+    height: 50px;
+    position: fixed;
+    margin-top: -17%;
+}
+
+.bottomBlankSpace{
+    width: 100%;
+    background-color: whitesmoke;
+    height: 7px;
+    position: fixed;
+    margin-top: -10%;
+}
+.linkRemoveStyle{
+    text-decoration: none;
+    width: 100%;
+    color: black;
+}
+
+.marginCorrection{
+    margin-left: 18% !important;
+}
+
+.navbarItems{
+    margin-left: 28%;
+    width: 100%;
+    display: flex;
+}
+

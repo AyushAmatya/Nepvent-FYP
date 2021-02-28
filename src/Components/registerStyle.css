@@ -1,0 +1,15 @@
+.formContainer{
+    background-color: white;
+    width: 80%;
+    margin-left: 10%;
+    align-items: center;
+    text-align: center;
+}
+
+.formLogo{
+    border-radius: 50%;
+    width: 17%;
+    height: 17%;
+    margin-top: 10px;
+    margin-left: 20%;
+}
