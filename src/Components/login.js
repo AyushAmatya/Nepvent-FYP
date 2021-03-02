@@ -1,135 +1,80 @@
 import React, { Component } from 'react';
-import './registerStyle.css';
-import imgE1 from '../img/e1.jpg';
-import imgE2 from '../img/e2.png';
-import imgE3 from '../img/e3.jpg';
-import imgE4 from '../img/e4.jpg';
-import imgE5 from '../img/e5.jpg';
-import imgE6 from '../img/e6.jpg';
+import './loginStyle.css';
 import {Grid, TextField, Button} from '@material-ui/core';
 import '../App.css';
+import {Link} from 'react-router-dom';
 import axios from 'axios';
-
 import LogoBlack from '../img/logoBlack.jpg';
 
 export default class Login extends Component {
     constructor (props){
         super(props);
-
-        // this.onChangeFirstName = this.onChangeFirstName.bind(this);
-        // this.onChangeMiddleName = this.onChangeMiddleName.bind(this);
-        // this.onChangeLastName = this.onChangeLastName.bind(this);
-        // this.onChangeCountry = this.onChangeCountry.bind(this);
-        // this.onChangeAddress = this.onChangeAddress.bind(this);
-        // this.onChangeContactNumber = this.onChangeContactNumber.bind(this);
-        // this.onChangeEmail = this.onChangeEmail.bind(this);
-        // this.onChangeUserName = this.onChangeUserName.bind(this);
-        // this.onChangePassword = this.onChangePassword.bind(this);
-        // this.handleSubmit = this.handleSubmit.bind(this);
-        // this.onChangeConfirmPassword = this.onChangeConfirmPassword.bind(this);
+        this.onChangeUserName = this.onChangeUserName.bind(this);
+        this.onChangePassword = this.onChangePassword.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
-    // onChangeFirstName(e){
-    //     this.setState({
-    //         firstName: e.target.value
-    //     });
-    // }
-    // onChangeMiddleName(e){
-    //     this.setState({
-    //         middleName: e.target.value
-    //     });
-    // }
-    // onChangeLastName(e){
-    //     this.setState({
-    //         lastName: e.target.value
-    //     });
-    // }
-    // onChangeCountry(e){
-    //     this.setState({
-    //         country: e.target.value
-    //     });
-    // }
-    // onChangeAddress(e){
-    //     this.setState({
-    //         address: e.target.value
-    //     });
-    // }
-    // onChangeContactNumber(e){
-    //     this.setState({
-    //         contactNumber: e.target.value
-    //     });
-    // }
-    // onChangeEmail(e){
-    //     this.setState({
-    //         email: e.target.value
-    //     });
-    // }
-    // onChangeUserName(e){
-    //     this.setState({
-    //         userName: e.target.value
-    //     });
-    // }
-    // onChangePassword(e){
-    //     this.setState({
-    //         password: e.target.value
-    //     });
-    // }
-    // onChangeConfirmPassword(e){
-    //     this.setState({
-    //         confirmPassword: e.target.confirmPassword
-    //     });
-    // }
-    // componentDidMount(){
-    //     document.querySelector(".navbar").className = "navbar invisible";
-    //     document.querySelector(".mainHeader").className = "mainHeader invisible";
-    // }
+    
+    componentDidMount(){
+        axios.get('http://localhost:5000/users/')
+            .then(response => {
+                if(response.data.length > 0){
+                    
+                    this.setState({
+                        alreadyRegisteredUsername: response.data.map(user=> user.userName)
+                    });
+                    
+                }
+            });
+    }
+
+    onChangeUserName(e){
+        this.setState({
+            userName: e.target.value
+        });
+    }
+    onChangePassword(e){
+        this.setState({
+            password: e.target.value
+        });
+    }
+    
     handleSubmit(event) {
         
         event.preventDefault();
-        const user = {
-            firstName: this.state.firstName,
-            middleName: this.state.middleName,
-            lastName: this.state.lastName,
-            country: this.state.country,
-            address: this.state.address,
-            contactNumber: this.state.contactNumber,
-            email: this.state.email,
-            userName: this.state.userName,
-            password: this.state.password,
-        }
-
-        console.log(user);
-
-        if(this.state.password == this.state.confirmPassword){
-            axios.post('http://localhost:5000/users/add', user)
-                .then(res => console.log(res.data));
-        }else{
-            alert('Password Confirmation Failed!');
-        }
+        console.log(this.state.alreadyRegisteredUsername);
         
-
-        this.setState({
-            userName: '',
-            password: '',
-        })
+        if (this.state.alreadyRegisteredUsername.includes(this.state.userName)){
+            console.log("yes");
+            axios.get('http://localhost:5000/users/getPassword/' + this.state.userName)
+                .then(response => {
+                    if(response.data.length > 0){
+                        this.setState({
+                            originalPass: response.data.map(user=> user.password)
+                        });
+                    }
+                });
+            if(this.state.password == this.state.originalPass){
+                window.location = '/'+ this.state.userName;
+            }else{
+                alert('Incorrect email or password!!!');
+            }
+        }else{
+            alert('Incorrect email or password!!!');
+        }
       }
     
     state={
+        alreadyRegisteredUsername:'',
         userName: '',
-        password: ''
+        password: '',
+        originalPass:''
     }
 
-    // imageHandler = (e) => {
-    //     var file = e.target.files[0];
-    //     const reader = new FileReader();
-    //     reader.onload = (event) =>{
-    //         if (reader.readyState === 2){
-                
-    //             this.setState({profileImg: reader.result})
-    //         }
-           
-    //     };
-    //     reader.readAsDataURL(file);
-    // }
+    handleCancleBtn(e){
+        window.location = '/';
+        
+    }
+    
     render(){
         const {profileImg} = this.state
         return (
@@ -142,20 +87,19 @@ export default class Login extends Component {
                             <h4 style={{fontFamily:"MV Boli", fontWeight:"normal", marginTop:"-35px", fontSize:"30px"}}>Event Publishing and Ticket Booking</h4>
                         </div>
                     </div>
-                    <form onSubmit={this.handleSubmit}>
-                        {/* <input type = "file" name="image-upload" id="input" accept="image/*" onChange={this.imageHandler}/> */}
-                        {/* <img src={profileImg} id="img" className="img"/> */}
-                        
+                    <form onSubmit={this.handleSubmit}>                        
                         <div style={{marginTop:'30px'}}>
-                            {/* <TextField required label="Email" value={this.state.email} onChange={this.onChangeEmail} style={{marginLeft:"55px"}}/> */}
-                            <TextField required label="User Name" value={this.state.userName} onChange={this.onChangeUserName} style={{marginLeft:"55px"}}/>
+                            <TextField required label="User Name" value={this.state.userName} onChange={this.onChangeUserName} style={{marginLeft:"55px", width:"35%"}}/>
                         </div>
                         <div style={{marginTop:'30px'}}>
-                            <TextField required label="Password" value={this.state.password} onChange={this.onChangePassword} style={{marginLeft:"55px"}}/>
-                            {/* <TextField required label="Confirm Password"  onChange={this.onChangeConfirmPassword} style={{marginLeft:"55px"}}/> */}
+                            <TextField required label="Password" value={this.state.password} onChange={this.onChangePassword} style={{marginLeft:"55px", width:"35%"}}/>
                         </div>
-                        <Button variant="contained" color="primary" type="submit" style = {{marginTop:'40px',  marginLeft:'50px'}}> Submit </Button>
-                        <Button variant="contained" color="secondary" type="button" style = {{marginTop:'40px', marginLeft:'20px'}}> Cancle </Button>
+                        <div style={{marginTop:'15px'}}>
+                            <Link to='/passwordReset' style = {{marginLeft:"50px"}}><i>Forgot Password</i></Link>
+                            <Link to='/register' style = {{marginLeft:"20px"}}><i>Register</i></Link>
+                        </div>
+                        <Button variant="contained" color="primary" type="submit" style = {{marginTop:'20px',  marginLeft:'50px'}}> Submit </Button>
+                        <Button variant="contained" color="secondary" type="button" style = {{marginTop:'20px', marginLeft:'20px'}} onClick={this.handleCancleBtn}> Cancle </Button>
                     </form>
                 </div>
             </div>

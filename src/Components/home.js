@@ -9,11 +9,17 @@ import imgE6 from '../img/e6.jpg';
 import {Grid} from '@material-ui/core';
 import Nav from './nav.js';
 
+
 export default class Home extends Component {
+    
+    
     render(){
+        
         return (
             <div>
+                
                 <Nav/>
+                
                 <div className="container">
                     <Grid container spacing={2}>
                         <Grid item xs={12} md={4}>

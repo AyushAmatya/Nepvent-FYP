@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
 import './registerStyle.css';
-import imgE1 from '../img/e1.jpg';
-import imgE2 from '../img/e2.png';
-import imgE3 from '../img/e3.jpg';
-import imgE4 from '../img/e4.jpg';
-import imgE5 from '../img/e5.jpg';
-import imgE6 from '../img/e6.jpg';
 import {Grid, TextField, Button} from '@material-ui/core';
 import '../App.css';
 import axios from 'axios';
@@ -75,7 +69,7 @@ export default class Register extends Component {
     }
     onChangeConfirmPassword(e){
         this.setState({
-            confirmPassword: e.target.confirmPassword
+            confirmPassword: e.target.value
         });
     }
     handleCancleBtn(e){
@@ -101,7 +95,8 @@ export default class Register extends Component {
         }
 
         console.log(user);
-
+        console.log(this.state.password);
+        console.log(this.state.confirmPassword);
         if(this.state.password == this.state.confirmPassword){
             axios.post('http://localhost:5000/users/add', user)
                 .then(res => console.log(res.data));
