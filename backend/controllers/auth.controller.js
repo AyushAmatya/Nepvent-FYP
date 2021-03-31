@@ -92,7 +92,7 @@ exports.activationController = (req, res) => {
       if (err) {
         console.log('Activation error');
         return res.status(401).json({
-          errors: 'Expired link. Signup again'
+          errors: 'Expired link. Register again'
         });
       } else {
         //if valid save to database
@@ -130,6 +130,59 @@ exports.activationController = (req, res) => {
   } else {
     return res.json({
       message: 'error happening please try again'
+    });
+  }
+};
+
+exports.loginController = (req, res) => {
+  const { email, password } = req.body;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const firstError = errors.array().map(error => error.msg)[0];
+    return res.status(422).json({
+      errors: firstError
+    });
+  } else {
+    // check if user exist
+    User.findOne({
+      email
+    }).exec((err, user) => {
+      if (err || !user) {
+        return res.status(400).json({
+          errors: 'User with that email does not exist. Please register'
+        });
+      }
+      // authenticate
+      if (!user.authenticate(password)) {
+        return res.status(400).json({
+          errors: 'Email and password do not match'
+        });
+      }
+      // generate a token and send to client
+      const token = jwt.sign(
+        {
+          _id: user._id
+        },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: '7d' //token valid in 7 day you can set remember me in front and set it to 30d
+        }
+      );
+      const { _id, first_name, middle_name, last_name, address, number, email, role } = user;
+
+      return res.json({
+        token,
+        user: {
+          _id,
+          first_name,
+          middle_name,
+          last_name,
+          address,
+          number,
+          email,
+          role
+        }
+      });
     });
   }
 };
