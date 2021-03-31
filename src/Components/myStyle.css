@@ -7,6 +7,14 @@
     margin-left: 10%;
     margin-right: 10%;
   }
+  .container2{
+    margin-top: 15%;
+    margin-left: 7%;
+    margin-right: 7%;
+    background-color: white;
+    padding: 3%;
+    padding-top: 10px;
+  }
   .searchBox{
       height: 20px;
       color: white;

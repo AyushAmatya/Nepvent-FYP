@@ -1,27 +1,45 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-
-require('dotenv').config();
+const morgan = require('morgan');
+const connectDB = require('./config/db')
 
 const app = express();
-const port = process.env.PORT || 5000;
 
-app.use(cors());
+require('dotenv').config({
+    path: './config/config.env'
+});
+
+
+
+// Connect to database
+connectDB();
+
+// body parser
 app.use(express.json());
 
-const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, {useNewUrlParser: true, useCreateIndex: true});
+// Load routes
+const authRouter = require('./routes/auth.route')
 
-const connection = mongoose.connection;
-connection.once('open', () =>{
-    console.log("MongoDB database connection established sucessfully");
+// Use Routes
+app.use('/api', authRouter)
+
+// Dev Logginf Middleware
+if (process.env.NODE_ENV === 'development') {
+    app.use(cors({
+        origin: process.env.CLIENT_URL
+    }))
+    app.use(morgan('dev'))
+}
+
+app.use((req, res) => {
+    res.status(404).json({
+        success: false,
+        msg: "Page not founded"
+    })
 })
 
-const usersRouter = require('./routes/users');
-
-app.use('/users', usersRouter);
-
-app.listen(port, () =>{
-    console.log(`Server is running on port ${port}`);
+const PORT = process.env.PORT
+app.listen(PORT, () =>{
+    console.log(`Server is running on port ${PORT}`);
 });

@@ -66,6 +66,7 @@ class nav extends React.Component{
     componentDidMount() {
       document.querySelector(".navbar").className = "navbar";
       window.addEventListener("scroll", this.handleScroll);
+      // console.log(this.props.userName);
     }
   
     componentWillUnmount() {
@@ -101,7 +102,7 @@ class nav extends React.Component{
                     <h4 style={{fontFamily:"MV Boli", fontWeight:"normal", marginTop:"-20px", color:"black"}}>Event Publishing and Ticket Booking</h4>
                 </div>
             </div>
-            <div class ="topBlankSpace invisible"></div>
+            <div className ="topBlankSpace invisible"></div>
             <AppBar className="navbar" >
                 <Toolbar>
                     <Typography variant="h6" >
@@ -143,12 +144,12 @@ class nav extends React.Component{
                           <MenuItem value='paid'>Paid</MenuItem>
                         </Select>
                       </FormControl>
-                      <MyProfile/>
-                      <MyMenu/>
+                      <MyProfile userName={this.props.userName}/>
+                      <MyMenu userName={this.props.userName}/>
                     </div>        
                 </Toolbar>
             </AppBar>
-            <div class ="bottomBlankSpace invisible"></div>
+            <div className ="bottomBlankSpace invisible"></div>
         </div>
         )
     }

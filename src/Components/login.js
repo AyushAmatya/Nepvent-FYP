@@ -41,10 +41,10 @@ export default class Login extends Component {
     handleSubmit(event) {
         
         event.preventDefault();
-        console.log(this.state.alreadyRegisteredUsername);
+        // console.log(this.state.alreadyRegisteredUsername);
         
         if (this.state.alreadyRegisteredUsername.includes(this.state.userName)){
-            console.log("yes");
+            // console.log("yes");
             axios.get('http://localhost:5000/users/getPassword/' + this.state.userName)
                 .then(response => {
                     if(response.data.length > 0){
@@ -53,6 +53,8 @@ export default class Login extends Component {
                         });
                     }
                 });
+            console.log(this.state.password);
+            console.log(this.state.originalPass);
             if(this.state.password == this.state.originalPass){
                 window.location = '/'+ this.state.userName;
             }else{

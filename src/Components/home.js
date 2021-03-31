@@ -12,13 +12,19 @@ import Nav from './nav.js';
 
 export default class Home extends Component {
     
-    
+    constructor (props){
+        super(props);
+    }
+
+    // componentDidMount(){
+    //     console.log(this.props.match.params.userName);
+    // }
     render(){
         
         return (
             <div>
                 
-                <Nav/>
+                <Nav userName = {this.props.match.params.userName}/>
                 
                 <div className="container">
                     <Grid container spacing={2}>
