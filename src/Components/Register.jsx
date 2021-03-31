@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 // import authSvg from '../assests/auth.svg';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
-import { authenticate, isAuth } from '../helpers/auth';
-import { Link, Redirect } from 'react-router-dom';
+import {  isAuth } from '../helpers/auth';
+import { Redirect } from 'react-router-dom';
 import '../App.css';
 import './registerStyle.css';
-import {Grid, TextField, Button} from '@material-ui/core';
+import {TextField, Button} from '@material-ui/core';
 import LogoBlack from '../img/logoBlack.jpg';
 
 function handleCancle(){
@@ -55,27 +55,27 @@ const Register = () => {
             password: password1
           })
           .then(res => {
-            setFormData({
-              ...formData,
-              name: '',
-              email: '',
-              password1: '',
-              password2: '',
-              textChange: 'Submitted'
-            });
+            // setFormData({
+            //   ...formData,
+            //   name: '',
+            //   email: '',
+            //   password1: '',
+            //   password2: '',
+            //   textChange: 'Submitted'
+            // });
 
             toast.success(res.data.message);
           })
           .catch(err => {
-            setFormData({
-              ...formData,
-              name: '',
-              email: '',
-              password1: '',
-              password2: '',
-              textChange: 'Sign Up'
-            });
-            console.log(err.response);
+            // setFormData({
+            //   ...formData,
+            //   name: '',
+            //   email: '',
+            //   password1: '',
+            //   password2: '',
+            //   textChange: 'Sign Up'
+            // });
+            console.log(err.message);
             toast.error(err.response.data.errors);
           });
       } else {

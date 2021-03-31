@@ -8,6 +8,7 @@ import CreateEvent from './Components/createEvent.js';
 import Register1 from './Components/Register.jsx';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 function App() {
   return (
     <div>

@@ -15,7 +15,7 @@ const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.MAIL_KEY);
 
 exports.registerController = (req,res) => {
-    const { name, email, password } = req.body;
+    const { first_name, middle_name, last_name, address, number, email, password } = req.body;
     const errors = validationResult(req);
 
     //custom validations
@@ -38,7 +38,11 @@ exports.registerController = (req,res) => {
         //generate token
         const token = jwt.sign(
             {
-              name,
+              first_name,
+              middle_name,
+              last_name,
+              address,
+              number,
               email,
               password
             },
@@ -75,3 +79,54 @@ exports.registerController = (req,res) => {
         });
     }
 }
+
+//Activation and save to database
+exports.activationController = (req, res) => {
+  const { token } = req.body;
+
+  if (token) {
+    //verify the token is valid or not or expired
+    jwt.verify(token, process.env.JWT_ACCOUNT_ACTIVATION, (err, decoded) => {
+      if (err) {
+        console.log('Activation error');
+        return res.status(401).json({
+          errors: 'Expired link. Signup again'
+        });
+      } else {
+        //if valid save to database
+        //get user details from token
+        const { first_name, middle_name, last_name, address, number, email, password } = jwt.decode(token);
+
+        console.log(first_name, middle_name, last_name, address, number, email, password);
+        const user = new User({
+          first_name,
+          middle_name,
+          last_name, 
+          address,
+          number,
+          email,
+          password
+        });
+
+        user.save((err, user) => {
+          if (err) {
+            console.log('Save error', errorHandler(err));
+            return res.status(401).json({
+              errors: errorHandler(err)
+            });
+          } else {
+            return res.json({
+              success: true,
+              message: user,
+              message: 'Registration success'
+            });
+          }
+        });
+      }
+    });
+  } else {
+    return res.json({
+      message: 'error happening please try again'
+    });
+  }
+};
