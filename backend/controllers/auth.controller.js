@@ -33,50 +33,52 @@ exports.registerController = (req,res) => {
             return res.status(400).json({
               errors: 'Email is taken'
             });
+          }else{
+            //generate token
+            const token = jwt.sign(
+              {
+                first_name,
+                middle_name,
+                last_name,
+                address,
+                number,
+                email,
+                password
+              },
+              process.env.JWT_ACCOUNT_ACTIVATION,
+              {
+                expiresIn: '15m'
+              }
+          );
+          //email data sending
+          const emailData = {
+              from: process.env.EMAIL_FROM,
+              to: email,
+              subject: 'Account activation link',
+              html: `
+                        <h1>Please use the following to activate your account</h1>
+                        <p>${process.env.CLIENT_URL}/users/activate/${token}</p>
+                        <hr />
+                        <p>This email may containe sensetive information</p>
+                        <p>${process.env.CLIENT_URL}</p>
+                    `
+          };
+          sgMail
+          .send(emailData)
+          .then(sent => {
+              return res.json({
+              message: `Email has been sent to ${email}`
+              });
+          })
+          .catch(err => {
+              return res.status(400).json({
+              success: false,
+              errors: errorHandler(err)
+              });
+          });
           }
         });
-        //generate token
-        const token = jwt.sign(
-            {
-              first_name,
-              middle_name,
-              last_name,
-              address,
-              number,
-              email,
-              password
-            },
-            process.env.JWT_ACCOUNT_ACTIVATION,
-            {
-              expiresIn: '15m'
-            }
-        );
-        //email data sending
-        const emailData = {
-            from: process.env.EMAIL_FROM,
-            to: email,
-            subject: 'Account activation link',
-            html: `
-                      <h1>Please use the following to activate your account</h1>
-                      <p>${process.env.CLIENT_URL}/users/activate/${token}</p>
-                      <hr />
-                      <p>This email may containe sensetive information</p>
-                      <p>${process.env.CLIENT_URL}</p>
-                  `
-        };
-        sgMail
-        .send(emailData)
-        .then(sent => {
-            return res.json({
-            message: `Email has been sent to ${email}`
-            });
-        })
-        .catch(err => {
-            return res.status(400).json({
-            success: false,
-            errors: errorHandler(err)
-            });
-        });
+        
     }
 }
 
@@ -110,6 +112,7 @@ exports.activationController = (req, res) => {
 
         user.save((err, user) => {
           if (err) {
+            console.log(err);
             console.log('Save error', errorHandler(err));
             return res.status(401).json({
               errors: errorHandler(err)

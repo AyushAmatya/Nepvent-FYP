@@ -17,4 +17,5 @@ const{
 router.post('/register', validRegister,registerController);
 router.post('/activation', activationController);
 
+
 module.exports = router;

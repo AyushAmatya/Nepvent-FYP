@@ -55,15 +55,18 @@ const Register = () => {
             password: password1
           })
           .then(res => {
-            // setFormData({
-            //   ...formData,
-            //   name: '',
-            //   email: '',
-            //   password1: '',
-            //   password2: '',
-            //   textChange: 'Submitted'
-            // });
-
+            setFormData({
+              ...formData,
+              first_name: '',
+              middle_name: '',
+              last_name: '',
+              address: '',
+              number: '',
+              email: '',
+              password1: '',
+              password2: '',
+              textChange: 'Submitted'
+            });
             toast.success(res.data.message);
           })
           .catch(err => {
@@ -75,7 +78,6 @@ const Register = () => {
             //   password2: '',
             //   textChange: 'Sign Up'
             // });
-            console.log(err.message);
             toast.error(err.response.data.errors);
           });
       } else {
