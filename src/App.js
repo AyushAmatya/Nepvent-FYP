@@ -5,6 +5,8 @@ import Home from './Components/home.js';
 import Register from './Components/register.js';
 import Login from './Components/login.js';
 import CreateEvent from './Components/createEvent.js';
+import Register1 from './Components/Register.jsx';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -13,7 +15,7 @@ function App() {
         
         <Switch>
           
-          <Route path = "/register" exact component={Register}/>
+          <Route path = "/register" exact render = {props =><Register1 {...props}/>}/>
           <Route path = "/login" exact component={Login}/>
           <Route path = "/:userName?/viewProfile" component={Login}/>
           <Route path = "/:userName?/createEvent" component={CreateEvent}/>
