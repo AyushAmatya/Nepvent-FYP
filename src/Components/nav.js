@@ -2,7 +2,6 @@ import React from 'react';
 import './navStyle.css';
 import SearchIcon from '@material-ui/icons/Search';
 import PropTypes from "prop-types";
-import MenuIcon from '@material-ui/icons/Menu';
 import MyMenu from './menu.js'
 import MyProfile from './profile.js'
 import { withStyles } from "@material-ui/core/styles";
@@ -10,7 +9,7 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 
 import LogoBlack from '../img/logoBlack.jpg';
 import LogoWhite from '../img/logoWhite.jpg';
-import {AppBar, Toolbar, Typography, TextField, Select, MenuItem, InputLabel, FormControl, Menu} from '@material-ui/core';
+import {AppBar, Toolbar, Typography, TextField, Select, MenuItem, InputLabel, FormControl} from '@material-ui/core';
 
 const CssTextField = withStyles({
     root: {
@@ -55,13 +54,6 @@ const CssTextField = withStyles({
     }
   };
 class nav extends React.Component{
-  
-
-  
-    constructor(props){
-        super(props);
-        
-    }
     
     componentDidMount() {
       document.querySelector(".navbar").className = "navbar";
@@ -91,7 +83,7 @@ class nav extends React.Component{
       }
     };
     render(){
-        const { classes } =this. props;
+        const { classes } =this.props;
         
         return(
             <div>

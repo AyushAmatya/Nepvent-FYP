@@ -29,7 +29,7 @@ const Register = () => {
     textChange: 'Sign Up'
   });
 
-  const { first_name, middle_name, last_name, address, number, email, password1, password2, textChange } = formData;
+  const { first_name, middle_name, last_name, address, number, email, password1, password2 } = formData;
 
   
   //handle change from inputs

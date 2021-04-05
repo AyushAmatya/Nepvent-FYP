@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import { authenticate, isAuth } from '../helpers/auth';
-import { Link, Redirect } from 'react-router-dom';
-import { GoogleLogin } from 'react-google-login';
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import { Link } from 'react-router-dom';
 import {TextField, Button} from '@material-ui/core';
 import LogoBlack from '../img/logoBlack.jpg';
 
@@ -18,58 +16,57 @@ function handleRegister(){
 const Login = ({ history }) => {
   const [formData, setFormData] = useState({
     email: '',
-    password1: '',
-    textChange: 'Sign In'
+    password1: ''
   });
-  const { email, password1, textChange } = formData;
+  const { email, password1 } = formData;
   const handleChange = text => e => {
     setFormData({ ...formData, [text]: e.target.value });
   };
 
-  const sendGoogleToken = tokenId => {
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/googlelogin`, {
-        idToken: tokenId
-      })
-      .then(res => {
-        console.log(res.data);
-        informParent(res);
-      })
-      .catch(error => {
-        console.log('GOOGLE SIGNIN ERROR', error.response);
-      });
-  };
-  const informParent = response => {
-    authenticate(response, () => {
-      isAuth() && isAuth().role === 'admin'
-        ? history.push('/admin')
-        : history.push('/private');
-    });
-  };
+  // const sendGoogleToken = tokenId => {
+  //   axios
+  //     .post(`${process.env.REACT_APP_API_URL}/googlelogin`, {
+  //       idToken: tokenId
+  //     })
+  //     .then(res => {
+  //       console.log(res.data);
+  //       informParent(res);
+  //     })
+  //     .catch(error => {
+  //       console.log('GOOGLE SIGNIN ERROR', error.response);
+  //     });
+  // };
+  // const informParent = response => {
+  //   authenticate(response, () => {
+  //     isAuth() && isAuth().role === 'admin'
+  //       ? history.push('/admin')
+  //       : history.push('/private');
+  //   });
+  // };
 
-  const sendFacebookToken = (userID, accessToken) => {
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/facebooklogin`, {
-        userID,
-        accessToken
-      })
-      .then(res => {
-        console.log(res.data);
-        informParent(res);
-      })
-      .catch(error => {
-        console.log('GOOGLE SIGNIN ERROR', error.response);
-      });
-  };
-  const responseGoogle = response => {
-    console.log(response);
-    sendGoogleToken(response.tokenId);
-  };
+  // const sendFacebookToken = (userID, accessToken) => {
+  //   axios
+  //     .post(`${process.env.REACT_APP_API_URL}/facebooklogin`, {
+  //       userID,
+  //       accessToken
+  //     })
+  //     .then(res => {
+  //       console.log(res.data);
+  //       informParent(res);
+  //     })
+  //     .catch(error => {
+  //       console.log('GOOGLE SIGNIN ERROR', error.response);
+  //     });
+  // };
+  // const responseGoogle = response => {
+  //   console.log(response);
+  //   sendGoogleToken(response.tokenId);
+  // };
 
-  const responseFacebook = response => {
-    console.log(response);
-    sendFacebookToken(response.userID, response.accessToken)
-  };
+  // const responseFacebook = response => {
+  //   console.log(response);
+  //   sendFacebookToken(response.userID, response.accessToken)
+  // };
 
   const handleSubmit = e => {
     console.log(process.env.REACT_APP_API_URL);
@@ -83,6 +80,10 @@ const Login = ({ history }) => {
         })
         .then(res => {
           authenticate(res, () => {
+
+            isAuth()
+            ? history.push(`/`)
+            : history.push('/');
             setFormData({
               ...formData,
               email: '',
@@ -106,8 +107,8 @@ const Login = ({ history }) => {
     }
   };
   return (
-    <div className='min-h-screen bg-gray-100 text-gray-900 flex justify-center'>
-      {isAuth() ? <Redirect to='/' /> : null}
+    <div>
+      {/* {isAuth() ? <Redirect to='/' /> : null} */}
       <ToastContainer />
         <div className="formContainer">
             <div style={{display:"flex", textAlign:"left"}}>

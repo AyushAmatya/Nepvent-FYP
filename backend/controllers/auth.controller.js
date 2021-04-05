@@ -205,7 +205,6 @@ exports.forgetController = (req, res) => {
       },
       (err, user) => {
         if (err || !user) {
-          console.log("whhyyyy");
           return res.status(400).json({
             error: 'User with that email does not exist'
           });

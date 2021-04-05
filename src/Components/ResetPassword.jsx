@@ -4,16 +4,14 @@ import axios from 'axios';
 import LogoBlack from '../img/logoBlack.jpg';
 import '../App.css';
 import './registerStyle.css';
-import { blue } from '@material-ui/core/colors';
 import {TextField, Button} from '@material-ui/core';
 const ResetPassword = ({match}) => {
   const [formData, setFormData] = useState({
       password1: '',
       password2: '',
       token: '',
-    textChange: 'Submit'
   });
-    const { password1, password2, textChange, token } = formData;
+    const { password1, password2, token } = formData;
     
     useEffect(() => {
         let token = match.params.token

@@ -4,6 +4,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import {Link} from 'react-router-dom';
+import { isAuth } from '../helpers/auth';
+import { ToastContainer, toast } from 'react-toastify';
 // import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 function NotLoggedIn(props){
@@ -16,7 +18,10 @@ function NotLoggedIn(props){
 
   const handleMenuClose = () => {
     setAnchorEl(null);
-    alert("You need to Login to Nepvent to use this feature");
+    toast.error(`You need to Login to Nepvent to use this feature`);
+  };
+  const handleMenuClose1 = () => {
+    setAnchorEl(null);
   };
   return (
     <div>
@@ -33,7 +38,7 @@ function NotLoggedIn(props){
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
-        onClose={handleMenuClose}
+        onClose={handleMenuClose1}
         style={{marginTop:'53px'}}
       >
         <MenuItem style={{borderBottom: '1px Solid', fontWeight:'bold', backgroundColor:'whitesmoke'}}>Menu:</MenuItem>
@@ -56,9 +61,9 @@ function LoggedIn(props){
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-  const createEvent = "/"+props.userName + "/createEvent";
   return (
     <div>
+      <ToastContainer />
       <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleMenuClick} style={{marginTop:'-10px',marginLeft:'25px'}}>
         <MenuIcon style={{
                             fontSize:'45px',
@@ -79,7 +84,7 @@ function LoggedIn(props){
         <MenuItem onClick={handleMenuClose}>Calendar</MenuItem>
         <MenuItem onClick={handleMenuClose}>My Tickets</MenuItem>
         <MenuItem onClick={handleMenuClose}>My Events</MenuItem>
-        <MenuItem onClick={handleMenuClose}><Link className="linkRemoveStyle" to={createEvent}>Create Events</Link></MenuItem>
+        <MenuItem onClick={handleMenuClose}><Link className="linkRemoveStyle" to='/createEvent'>Create Events</Link></MenuItem>
       </Menu>
     </div>
   );
@@ -87,12 +92,12 @@ function LoggedIn(props){
 
 export default function SimpleMenu(props) {
 
-  if(props.userName == undefined){
-    console.log("undefined");
-    return <NotLoggedIn/>;
+  if(isAuth()){
+    return <LoggedIn/>;
+    
   }else{
-    console.log("defined");
-    return <LoggedIn userName = {props.userName}/>;
+    return <NotLoggedIn/>;
+    
   }
   
 }
