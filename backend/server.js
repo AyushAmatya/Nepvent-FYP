@@ -38,9 +38,11 @@ app.use(express.json());
 
 // Load routes
 const authRouter = require('./routes/auth.route')
+const eventRouter = require('./routes/event.route')
 
 // Use Routes
 app.use('/api', authRouter)
+app.use('/event', eventRouter)
 
 // Dev Logginf Middleware
 if (process.env.NODE_ENV === 'development') {

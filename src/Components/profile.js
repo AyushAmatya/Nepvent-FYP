@@ -5,7 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import {Link} from 'react-router-dom';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { isAuth, signout } from '../helpers/auth';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 function NotLoggedIn(){
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -21,7 +21,6 @@ function NotLoggedIn(){
 
   return (
     <div>
-      <ToastContainer />
       <Button aria-controls="profile-menu" aria-haspopup="true" onClick={handleProfileClick} style={{marginTop:'-10px',marginLeft:'25px'}}>
         <AccountCircleIcon style={{
                             fontSize:'45px',
@@ -65,7 +64,6 @@ function LoggedIn(props){
   var viewProfile = '/' + props.userName + '/viewProfile'
   return (
     <div>
-      <ToastContainer />
       <Button aria-controls="profile-menu" aria-haspopup="true" onClick={handleProfileClick} style={{marginTop:'-10px',marginLeft:'25px'}}>
         <AccountCircleIcon style={{
                             fontSize:'45px',

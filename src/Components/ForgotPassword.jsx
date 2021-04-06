@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 import {TextField, Button} from '@material-ui/core';
 import LogoBlack from '../img/logoBlack.jpg';
@@ -41,7 +41,6 @@ const ForgetPassword = ({history}) => {
   };
   return (
     <div className='min-h-screen bg-gray-100 text-gray-900 flex justify-center'>
-      <ToastContainer />
       <div className="formContainer">
             <div style={{display:"flex", textAlign:"left"}}>
                 <img src={LogoBlack} alt="logo" className="formLogo"/>

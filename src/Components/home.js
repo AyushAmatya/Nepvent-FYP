@@ -13,11 +13,11 @@ import { ToastContainer, toast } from 'react-toastify';
 
 export default class Home extends Component {
     componentDidMount(){
-        if(isAuth()){
-            toast.success(`Hey ${JSON.parse(localStorage.getItem('user'))['first_name']}, Welcome back!`);
-        }else{
-            toast.error(`Please login to use all services`);
-        }
+        // if(isAuth()){
+        //     toast.success(`Hey ${JSON.parse(localStorage.getItem('user'))['first_name']}, Welcome back!`);
+        // }else{
+        //     toast.error(`Please login to use all services`);
+        // }
     }
     render(){
         

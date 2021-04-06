@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 import LogoBlack from '../img/logoBlack.jpg';
 import '../App.css';
@@ -53,7 +53,6 @@ const ResetPassword = ({match}) => {
   };
   return (
     <div>
-      <ToastContainer />
       <div className="formContainer">
             <div style={{display:"flex", textAlign:"left"}}>
                 <img src={LogoBlack} alt="logo" className="formLogo"/>

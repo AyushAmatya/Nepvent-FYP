@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // import authSvg from '../assests/auth.svg';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 import {  isAuth } from '../helpers/auth';
 import { Redirect } from 'react-router-dom';
@@ -91,7 +91,6 @@ const Register = () => {
   return (
     <div className='min-h-screen bg-gray-100 text-gray-900 flex justify-center'>
       {isAuth() ? <Redirect to='/' /> : null}
-      <ToastContainer />
       <div className="formContainer">
                     <div style={{display:"flex", textAlign:"left"}}>
                         <img src={LogoBlack} alt="logo" className="formLogo"/>

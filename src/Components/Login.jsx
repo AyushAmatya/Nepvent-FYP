@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 import { authenticate, isAuth } from '../helpers/auth';
 import { Link } from 'react-router-dom';
@@ -109,7 +109,6 @@ const Login = ({ history }) => {
   return (
     <div>
       {/* {isAuth() ? <Redirect to='/' /> : null} */}
-      <ToastContainer />
         <div className="formContainer">
             <div style={{display:"flex", textAlign:"left"}}>
                 <img src={LogoBlack} alt="logo" className="formLogo"/>

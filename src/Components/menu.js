@@ -5,7 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import {Link} from 'react-router-dom';
 import { isAuth } from '../helpers/auth';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 // import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 function NotLoggedIn(props){
@@ -63,7 +63,6 @@ function LoggedIn(props){
   };
   return (
     <div>
-      <ToastContainer />
       <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleMenuClick} style={{marginTop:'-10px',marginLeft:'25px'}}>
         <MenuIcon style={{
                             fontSize:'45px',
@@ -83,7 +82,7 @@ function LoggedIn(props){
         <MenuItem style={{borderBottom: '1px Solid', fontWeight:'bold', backgroundColor:'whitesmoke'}}>Menu:</MenuItem>
         <MenuItem onClick={handleMenuClose}>Calendar</MenuItem>
         <MenuItem onClick={handleMenuClose}>My Tickets</MenuItem>
-        <MenuItem onClick={handleMenuClose}>My Events</MenuItem>
+        <MenuItem onClick={handleMenuClose}><Link className="linkRemoveStyle" to='/myEvents'>My Events</Link></MenuItem>
         <MenuItem onClick={handleMenuClose}><Link className="linkRemoveStyle" to='/createEvent'>Create Events</Link></MenuItem>
       </Menu>
     </div>

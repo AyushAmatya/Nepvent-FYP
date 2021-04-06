@@ -17,6 +17,9 @@ exports.validRegister = [
     }).withMessage('Password must contain at least 6 characters').matches(/\d/).withMessage('password must contain a number')
 ]
 
+// exports.validAddEvent = [
+//     check('eventCoordination.manager_email').isEmail().withMessage('Manager email must be a valid email address')
+// ]
 exports.validLogin = [
     check('email')
     .isEmail()

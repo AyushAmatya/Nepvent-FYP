@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import { authenticate, isAuth } from '../helpers/auth';
@@ -64,7 +64,6 @@ const Activate = ({ match }) => {
   return (
     <div className='min-h-screen bg-gray-100 text-gray-900 flex justify-center'>
         {isAuth() ? <Redirect to='/' /> : null}
-        <ToastContainer />
         <div className="formContainer">
             <div style={{display:"flex", textAlign:"left"}}>
                 <img src={LogoBlack} alt="logo" className="formLogo"/>
