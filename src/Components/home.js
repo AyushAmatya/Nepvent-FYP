@@ -1,63 +1,71 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import './myStyle.css';
-import imgE1 from '../img/e1.jpg';
-import imgE2 from '../img/e2.png';
-import imgE3 from '../img/e3.jpg';
-import imgE4 from '../img/e4.jpg';
-import imgE5 from '../img/e5.jpg';
-import imgE6 from '../img/e6.jpg';
-import {Grid} from '@material-ui/core';
+import {Grid, Card, CardActionArea, CardContent} from '@material-ui/core';
 import Nav from './nav.js';
 import { isAuth } from '../helpers/auth';
 import { ToastContainer, toast } from 'react-toastify';
+import axios from 'axios';
+import { Link, Redirect } from 'react-router-dom';
 
-export default class Home extends Component {
-    componentDidMount(){
-        // if(isAuth()){
-        //     toast.success(`Hey ${JSON.parse(localStorage.getItem('user'))['first_name']}, Welcome back!`);
-        // }else{
-        //     toast.error(`Please login to use all services`);
-        // }
-    }
-    render(){
+
+const Home = () => {
+    const [userId, setUserId] = React.useState();
+    const [allOtherEvents, setAllOtherEvents] = React.useState();
+    useEffect(()=>{
+        if(localStorage.getItem('user')){
+            const user_id = JSON.parse(localStorage.getItem('user'))['_id']
+            setUserId(user_id);
+            axios.post(`${process.env.REACT_APP_EVENT_API_URL}/getAllOtherEvents`, {user_id:user_id})
+        .then(res => {
+            const allOtherEvents = res.data;
+            setAllOtherEvents(allOtherEvents);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+        }else{
+            const user_id='';
+            axios.post(`${process.env.REACT_APP_EVENT_API_URL}/getAllOtherEvents`, {user_id:user_id})
+        .then(res => {
+            const allOtherEvents = res.data;
+            setAllOtherEvents(allOtherEvents);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+        }
         
-        return (
-            <div>
-                <ToastContainer />
-                <Nav userName = {this.props.match.params.userName}/>
-                
-                <div className="container">
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} md={4}>
-                            <img src = {imgE1} alt = '' style={{width:'100%'}}/>
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-                            <img src = {imgE2} alt = '' style={{width:'100%'}}/>
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-                            <img src = {imgE3} alt = '' style={{width:'100%'}}/>
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-                            <img src = {imgE4} alt = '' style={{width:'100%'}}/>
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-                            <img src = {imgE5} alt = '' style={{width:'100%'}}/>
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-                            <img src = {imgE6} alt = '' style={{width:'100%'}}/>
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-                            <img src = {imgE4} alt = '' style={{width:'100%'}}/>
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-                            <img src = {imgE5} alt = '' style={{width:'100%'}}/>
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-                            <img src = {imgE6} alt = '' style={{width:'100%'}}/>
-                        </Grid>
-                    </Grid>
-                </div>
-            </div>
-        )
+    },[]);
+
+    const renderAllOtherEvents=(allOtherEvents)=>{
+        return allOtherEvents && allOtherEvents.map((events,i)=>{
+            return(
+                <Grid item xs={12} key={i} md={4} style={{marginTop:'20px'}}>
+                    <Link to={'/myEventDetails/'+events.event_id} style={{textDecoration:'none'}}>
+                        <Card className='items' style={{backgroundColor:'silver'}}>
+                            <CardActionArea>
+                                <CardContent>
+                                    <h2 className='item-name'>{events.event_name}</h2>
+                                    <div className='item-price'>{events.from_date.slice(0,10)} - {events.to_date.slice(0,10)}</div>
+                                </CardContent>
+                            </CardActionArea>
+                        </Card>
+                    </Link>
+                </Grid>
+            )
+        })
     }
+    return (
+        <div>
+            <ToastContainer />
+            <Nav/>
+            
+            <div className="container">
+                <Grid container spacing={2}>
+                    {renderAllOtherEvents(allOtherEvents)}
+                </Grid>
+            </div>
+        </div>
+    )
 }
+export default Home;

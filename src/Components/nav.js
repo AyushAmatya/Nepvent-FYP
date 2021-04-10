@@ -6,7 +6,7 @@ import MyMenu from './menu.js'
 import MyProfile from './profile.js'
 import { withStyles } from "@material-ui/core/styles";
 import FilterListIcon from '@material-ui/icons/FilterList';
-
+import { Link, Redirect } from 'react-router-dom';
 import LogoBlack from '../img/logoBlack.jpg';
 import LogoWhite from '../img/logoWhite.jpg';
 import {AppBar, Toolbar, Typography, TextField, Select, MenuItem, InputLabel, FormControl} from '@material-ui/core';
@@ -89,18 +89,20 @@ class nav extends React.Component{
             <div>
             <div className="mainHeader">
                 <img src={LogoBlack} alt="logo" className="logo1"/>
+
                 <div className='title'>
-                    <h1 style={{fontFamily:"Comic Sans MS", color:"black"}}>Nepvent</h1>
-                    <h4 style={{fontFamily:"MV Boli", fontWeight:"normal", marginTop:"-20px", color:"black"}}>Event Publishing and Ticket Booking</h4>
+                    <h1 style={{fontFamily:"Comic Sans MS", color:"black"}}><Link to='/' style={{textDecoration:'none', color:'black'}}>Nepvent</Link></h1>
+                    <h4 style={{fontFamily:"MV Boli", fontWeight:"normal", marginTop:"-20px", color:"black"}}><Link to='/' style={{textDecoration:'none', color:'black'}}>Event Publishing and Ticket Booking</Link></h4>
                 </div>
+                
             </div>
-            <div className ="topBlankSpace invisible"></div>
-            <AppBar className="navbar" >
+            <div className ="topBlankSpace invisible" style={{zIndex:'999'}}></div>
+            <AppBar className="navbar" style={{zIndex:'999'}}>
                 <Toolbar>
                     <Typography variant="h6" >
                     <div className="companySubTitle invisible">
                       
-                      <h4 style={{fontFamily:"Comic Sans MS", color:"whitesmoke", marginLeft:"82%", marginTop:"5%"}}><u>Nepvent</u></h4>
+                      <h4 style={{fontFamily:"Comic Sans MS", color:"whitesmoke", marginLeft:"82%", marginTop:"5%"}}><u><Link to='/' style={{textDecoration:'none', color:'whitesmoke'}}>Nepvent</Link></u></h4>
                       <img src={LogoWhite} alt="logo" className="smallLogo"/>
                     </div>
                     
@@ -141,7 +143,7 @@ class nav extends React.Component{
                     </div>        
                 </Toolbar>
             </AppBar>
-            <div className ="bottomBlankSpace invisible"></div>
+            <div className ="bottomBlankSpace invisible" style={{zIndex:'999'}}></div>
         </div>
         )
     }

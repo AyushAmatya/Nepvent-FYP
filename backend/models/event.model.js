@@ -92,6 +92,24 @@ const eventScheama = new mongoose.Schema(
         trim: true,
         required: true,
         unique: false
+      },
+      ticket_limit:{
+        type: Number,
+        trim: true,
+        required: true,
+        unique: false
+      },
+      ticket_type:{
+        type: String,
+        trim: true,
+        required: true,
+        unique: false
+      },
+      ticlet_price:{
+        type:Number,
+        trim:true,
+        required:false,
+        unique:false
       }
     },
     {

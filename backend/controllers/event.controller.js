@@ -38,7 +38,10 @@ exports.addEventController = (req,res) => {
     proposed_venue,
     link ,
     no_of_days ,
-    number_of_expected_guest } = req.body.eventDetailsData;
+    number_of_expected_guest,
+    ticket_type,
+    ticket_limit,
+    ticket_price } = req.body.eventDetailsData;
 
     const { event_manager_name,
       manager_department,
@@ -61,6 +64,7 @@ exports.addEventController = (req,res) => {
      av,
      catering
     } = req.body.eventPurpose;
+
     const event = new Event({
       user_id,
       event_id,
@@ -76,7 +80,10 @@ exports.addEventController = (req,res) => {
       link ,
       event_category_title,
       no_of_days ,
-      number_of_expected_guest
+      number_of_expected_guest,
+      ticket_type,
+      ticket_limit,
+      ticket_price
     });
 
     const eventCoordination = new EventCoordination({
@@ -155,7 +162,7 @@ exports.uploadImageController = (req, res, next) => {
   const eventImage = new EventImage({
     file_name:req.files[0].filename,
     original_name:req.files[0].originalname,
-    path:req.files[0].path,
+    path:'/uploads/'+req.files[0].filename,
     event_id:''
   });
   eventImage.save((err, eventImage) => {
@@ -183,5 +190,45 @@ exports.linkImageAndEventController = (req, res) => {
       $set: { event_id:req.body.event_id }
     }
   ).then(events=>res.json(events))
+  .catch(err => res.status(400).json('Error: ' + err));
+}
+
+exports.getMyEventsController = (req, res) => {
+  Event.find({"user_id":req.body.user_id}).sort({"event_id": 1}).collation({locale: "en_US", numericOrdering: true})
+  .then(events=>res.json(events))
+  .catch(err => res.status(400).json('Error: ' + err));
+}
+
+exports.getImageListController =(req, res) => {
+  // console.log(req.body.event_id);
+  EventImage.find({"event_id":req.body.event_id}).sort({"event_id": 1}).collation({locale: "en_US", numericOrdering: true})
+  .then(events=>res.json(events))
+  .catch(err => res.status(400).json('Error: ' + err));
+}
+
+exports.getEventDteailsController =(req,res) =>{
+  Event.find({"event_id":req.body.event_id})
+  .then(event=>res.json(event))
+  .catch(err => res.status(400).json('Error: ' + err));
+}
+
+exports.getEventPurposeController=(req,res) =>{
+  EventPurpose.find({"event_id":req.body.event_id})
+  .then(event=>res.json(event))
+  .catch(err => res.status(400).json('Error: ' + err));
+}
+exports.getEventCoordinationController=(req,res) =>{
+  EventCoordination.find({"event_id":req.body.event_id})
+  .then(event=>res.json(event))
+  .catch(err => res.status(400).json('Error: ' + err));
+}
+exports.getEventImagesController=(req, res) => {
+  EventImage.find({"event_id":req.body.event_id})
+  .then(event=>res.json(event))
+  .catch(err => res.status(400).json('Error: ' + err));
+}
+exports.getAllOtherEventsController=(req,res)=>{
+  Event.find({"user_id":{$ne:req.body.user_id}})
+  .then(event=>res.json(event))
   .catch(err => res.status(400).json('Error: ' + err));
 }

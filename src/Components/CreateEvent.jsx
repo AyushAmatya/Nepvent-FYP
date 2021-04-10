@@ -60,6 +60,7 @@ function handleRegister(){
 }
 const optionForEventType = ['Online', 'On Site'];
 
+const optionForTicketType = ['Paid', 'Free'];
 
 const CreateEvent = ({ match }) => {
 
@@ -103,6 +104,7 @@ const CreateEvent = ({ match }) => {
   const [toTime, setToTime] = useState('19:00');
   const [fromTime, setFromTime] = useState('07:00');
   const [eventTypeOptions, setEventTypeOptions] = useState(optionForEventType[1]);
+  const [ticketTypeOptions, setTicketTypeOptions] = useState(optionForTicketType[0]);
   let from_date_temp = JSON.stringify(new Date(Date.UTC(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), selectedDate.getHours(), selectedDate.getMinutes())));
   from_date_temp = from_date_temp.slice(1,11);
   let to_date_temp = JSON.stringify(new Date(Date.UTC(toDate.getFullYear(), toDate.getMonth(), toDate.getDate(), toDate.getHours(), toDate.getMinutes())));
@@ -111,6 +113,7 @@ const CreateEvent = ({ match }) => {
     user_id:'',
     event_id:'',
     event_name:'',
+    ticket_price:'',
     from_date:from_date_temp,
     from_time:toTime,
     to_date:to_date_temp,
@@ -120,19 +123,24 @@ const CreateEvent = ({ match }) => {
     other_category_description:'',
     event_type:eventTypeOptions,
     proposed_venue: '',
+    ticket_type:'',
+    ticket_limit:'',
     link:'',
     no_of_days:noOfDays,
     number_of_expected_guest: ''
   });
   const [noOfExpectedGuests, setNoOfExpectedGuests] = useState();
+  const [ticketLimit, setTicketLimit] = useState();
   const [value, setValue] = useState();
   const [inputValue, setInputValue] = useState('');
   const [otherCategory, setOtherCategory] = useState(false);
   const [typeOnline, setTypeOnline] = useState(false);
+  const [ticketPaid, setTicketPaid] = useState(true);
   const [selectedFiles, setSelectedFiles ] = useState([]);
   
   const [eventType, setEventType] = React.useState('');
-  
+  const [ticketype, setticketType] = useState('');
+
   const handleDateChange = (date) => {
     if(date.setHours(0, 0, 0, 0) > toDate.setHours(0, 0, 0, 0)){
         toast.error('From-date cant be greater than To-date');
@@ -149,12 +157,12 @@ const CreateEvent = ({ match }) => {
     
   };
   const handleCategoryChange = (event, newValue) => {
+    if(newValue != null){
     setValue(newValue);
     const other_category_description = '';
     const event_category = newValue.category;
     const event_category_title = newValue.title;
     setEventDetailsData({ ...eventDetailsData, other_category_description, event_category, event_category_title});
-    if(newValue != null){
         if(newValue.title == 'Other'){
             setOtherCategory(true);
         }else{
@@ -162,6 +170,20 @@ const CreateEvent = ({ match }) => {
         }
     }else{
         setOtherCategory(false);
+    }
+  }
+  const handleTicketTypeChange = (event, newValue) => {
+    setTicketTypeOptions(newValue);
+    const ticket_type = newValue;
+    setEventDetailsData({ ...eventDetailsData, ticket_type});
+    if(newValue != null){
+        if(newValue == 'Paid'){
+            setTicketPaid(true);
+        }else{
+            setTicketPaid(false);
+        }
+    }else{
+        setTicketPaid(false);
     }
   }
   const handleTypeChange = (event, newValue) => {
@@ -284,7 +306,7 @@ const CreateEvent = ({ match }) => {
     
   }, [match.params]);
   const { first_name, middle_name, last_name } = formData;
-  const {other_category_description, link, proposed_venue} = eventDetailsData;
+  const {other_category_description, link, proposed_venue, ticket_price} = eventDetailsData;
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -571,6 +593,63 @@ const CreateEvent = ({ match }) => {
                                 </div>                  
                             </Grid>
                             
+                            <Grid item xs={12} md={4}>
+                                <div style={{marginTop:'30px'}}>
+                                    <Autocomplete
+                                        value={ticketTypeOptions}
+                                        onChange={handleTicketTypeChange}
+                                        inputValue={ticketype}
+                                        onInputChange={(event, newInputValue) => {
+                                        setticketType(newInputValue);
+                                        }}
+                                        options={optionForTicketType}
+                                        style={{ width: '100%' }}
+                                        renderInput={(params) => <TextField {...params} required label="Ticket Type" variant="outlined" />}
+                                    />
+                                </div>
+                            </Grid>
+                            {ticketPaid?<Grid item xs={12} md={4}> 
+                                <div style={{marginTop:'30px'}}>
+                                    <TextField 
+                                    required 
+                                    label="Ticket Price (RS)"
+                                    value={ticket_price} 
+                                    style={{ width:"100%"}}
+                                    onChange={(event) => {
+                                        if(isNaN(Number(event.target.value))){
+                                            toast.error("Ticket Price must be integer value"); 
+                                            const ticket_price='';
+                                            setEventDetailsData({ ...eventDetailsData, ticket_price })
+                                        }else{
+                                            const ticket_price=event.target.value;
+                                            setEventDetailsData({ ...eventDetailsData, ticket_price });
+                                        }
+                                    }}
+                                    />
+                                </div>                  
+                            </Grid>:null}
+                            <Grid item xs={12} md={4}> 
+                                <div style={{marginTop:'30px'}}>
+                                    <TextField 
+                                    required 
+                                    value={ticketLimit}
+                                    label="Ticket Limit"  
+                                    style={{ width:"100%"}}
+                                    onChange={(event) => {
+                                        if(isNaN(Number(event.target.value))){
+                                            toast.error("Ticket Limit must be integer value"); 
+                                            setTicketLimit('');
+                                        }else{
+                                            const ticket_limit=Number(event.target.value);
+                                            setEventDetailsData({ ...eventDetailsData, ticket_limit });
+                                            setTicketLimit(event.target.value);
+                                        }
+                                        
+                                    }}
+                                    />
+                                </div>                  
+                            </Grid>
+
                             <Grid item xs={12} md={12}>
                             <div>
                                 <input type="file" id="file" multiple onChange={handleImageChange} />

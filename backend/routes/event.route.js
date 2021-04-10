@@ -11,13 +11,26 @@ const{
     addEventController,
     getMaxIdController,
     uploadImageController,
-    linkImageAndEventController
+    linkImageAndEventController,
+    getMyEventsController,
+    getImageListController,
+    getEventDteailsController,
+    getEventPurposeController,
+    getEventCoordinationController,
+    getEventImagesController,
+    getAllOtherEventsController
 } = require('../controllers/event.controller.js')
 
 router.post('/add', addEventController);
 router.get('/getMaxId', getMaxIdController);
 router.post('/uploadImage', store.array('image'), uploadImageController);
 router.post('/linkImageAndEvent', linkImageAndEventController);
-
+router.post('/getMyEvents', getMyEventsController);
+router.post('/getImageList', getImageListController);
+router.post('/getEventDteails', getEventDteailsController);
+router.post('/getEventPurpose', getEventPurposeController);
+router.post('/getEventCoordination', getEventCoordinationController);
+router.post('/getEventImages', getEventImagesController);
+router.post('/getAllOtherEvents', getAllOtherEventsController);
 
 module.exports = router;

@@ -9,6 +9,7 @@ import Activate from './Components/Activate.jsx';
 import Forget from './Components/ForgotPassword.jsx';
 import Reset from './Components/ResetPassword.jsx';
 import MyEvents from './Components/MyEvents.jsx';
+import EventDetails from './Components/EventDetails.jsx';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -27,6 +28,7 @@ function App() {
           <Route path = "/login" exact render = {props =><Login {...props}/>}/>
           <Route path = "/createEvent" exact render = {props =><CreateEvent {...props}/>}/>
           <Route path = "/myEvents" exact render = {props =><MyEvents {...props}/>}/>
+          <Route path = "/myEventDetails/:event_id?" exact render = {props =><EventDetails {...props}/>}/>
           <Route path = "/" exact component={Home}/>
         </Switch>
       </Router>
