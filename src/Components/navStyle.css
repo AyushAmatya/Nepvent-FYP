@@ -61,6 +61,9 @@
     color: black;
 }
 
+.makeBlur{
+    opacity: 0.5;
+}
 .marginCorrection{
     margin-left: 18% !important;
 }

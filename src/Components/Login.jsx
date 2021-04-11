@@ -80,10 +80,12 @@ const Login = ({ history }) => {
         })
         .then(res => {
           authenticate(res, () => {
-
-            isAuth()
-            ? history.push(`/`)
-            : history.push('/');
+            isAuth() && isAuth().role === 'admin'
+              ? history.push('/admin')
+              : history.push('/');
+            // isAuth()
+            // ? history.push(`/`)
+            // : history.push('/');
             setFormData({
               ...formData,
               email: '',

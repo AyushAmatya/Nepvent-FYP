@@ -105,7 +105,7 @@ const eventScheama = new mongoose.Schema(
         required: true,
         unique: false
       },
-      ticlet_price:{
+      ticket_price:{
         type:Number,
         trim:true,
         required:false,

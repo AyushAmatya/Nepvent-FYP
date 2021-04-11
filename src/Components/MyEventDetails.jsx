@@ -12,7 +12,6 @@ import {TextField, Button, Grid, TextareaAutosize, Card, CardActionArea, CardCon
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Nav from './nav.js';
 import DateFnsUtils from '@date-io/date-fns';
-import Popup from 'reactjs-popup';
 
 import item1 from '../img/item1.jpg'
 import item2 from '../img/item2.jpg'
@@ -37,7 +36,7 @@ import {
 
 
 
-const EventDetails = ({ match }) => {
+const MyEvents = ({ match }) => {
   
 
   // const [allEventData, setAllEventData]= useState({
@@ -105,25 +104,7 @@ const EventDetails = ({ match }) => {
         return <img src={photo.path} alt="" key={photo.path} style={{width:'334px',height:'190px',objectFit:'cover',padding:'0.75rem'}} />;
     });
   };
-  const [showEventDetails, setShowEventDetails] = useState(false);
-  const [showEventCoordination, setShowEventCoordination] = useState(false);
-  const [showEventPurpose, setShowEventPorpose] = useState(false);
 
-  const handleEventDetailsBtnClick = () => {
-    setShowEventDetails(true);
-    setShowEventCoordination(false);
-    setShowEventPorpose(false);
-  }
-  const handleEventCoordinationBtnClick =() =>{
-    setShowEventDetails(false);
-    setShowEventCoordination(true);
-    setShowEventPorpose(false);
-  }
-  const handleEventPurposeBtnClick = () => {
-    setShowEventDetails(false);
-    setShowEventCoordination(false);
-    setShowEventPorpose(true);
-  }
   if(eventId){
     return(
       <div>
@@ -136,193 +117,160 @@ const EventDetails = ({ match }) => {
                 <div className="container2">
                   
                 <button type='button' onClick={handleBtnClick}>console all data</button>
-                  <Grid container spacing={5}>
-                    <Grid item xs={12} md={12}>
-                      <div>
-                          <div className="result">{eventImages?renderPhotos(eventImages):null}</div>
-                      </div>
-                    </Grid>
-                  </Grid>
-                  
-                    <h1 style={{color:'#003542', fontFamily:"Comic Sans MS", fontSize:"30px"}}>{eventDetails?eventDetails.event_name:''}</h1>
-                    <Grid container spacing={2} style={{fontFamily:"MV Boli"}}>
-                      <Grid item xs={12} md={3} >
-                          <b>From-Date: </b>{eventDetails?eventDetails.from_date.slice(0,10):''}
-                      </Grid>
-                      <Grid item xs={12} md={3} >
-                          <b>From-Time: </b>{eventDetails?eventDetails.from_time:''}
-                      </Grid>
-                      <Grid item xs={12} md={3} >
-                          <b>To-Date: </b>{eventDetails?eventDetails.to_date.slice(0,10):''}
-                      </Grid>
-                      <Grid item xs={12} md={3} >
-                          <b>To-Time: </b>{eventDetails?eventDetails.to_time:''}
-                      </Grid>
-                      {eventDetails?eventDetails.proposed_venue?<Grid item xs={12} md={3} ><b>Proposed-Venue: </b>{eventDetails.proposed_venue}</Grid>:<Grid item xs={12} md={3} ><b>Link: </b>{eventDetails.link}</Grid>:''}
-                      <Grid item xs={12} md={3}>
-                        <b>Expected Guests: </b>{eventDetails?eventDetails.number_of_expected_guest:''}
-                      </Grid>
-                      <Grid item xs={12} md={3}>
-                      <b>Ticket Price: </b>{eventDetails?eventDetails.ticket_price?eventDetails.ticket_price:'Free':''}
-                      </Grid>
-                      <Grid item xs={12} md={3}>
-                      <b>Available Ticket: </b>{eventDetails?eventDetails.ticket_limit:''}
-                      </Grid>
-                  </Grid>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} md={1}>
-                    </Grid>
-                    <Grid item xs={12} md={3}>
-                      <Button variant="outlined" color="primary" type="button"  onClick={handleEventDetailsBtnClick} style={{marginTop:'60px', width:'100%'}}> Show Event Details </Button>
-                    </Grid>
-                    
-                    <Grid item xs={12} md={3}>
-                      <Button variant="outlined" color="primary" type="button"  onClick={handleEventPurposeBtnClick} style={{marginTop:'60px', width:'100%'}}> Show Event Purpose </Button>
-                    </Grid>
-                    
-                    <Grid item xs={12} md={3}>
-                      <Button variant="outlined" color="primary" type="button"  onClick={handleEventCoordinationBtnClick} style={{marginTop:'60px', width:'100%'}}> Show Event Coordination </Button>
-                    </Grid>
-                    <Grid item xs={12} md={1}>
-                    </Grid>
-                    
-                  </Grid>
-                  {showEventDetails?
-                  <div style={{width:'100%'}}>
-                    <h1 style={{color:'#BF9000', fontFamily:"Comic Sans MS", fontSize:"20px", borderBottom:'2px Solid', width:"140px", marginTop:'40px'}}>Event Details</h1>
-                    <Grid container spacing={5}>
-                          
-                          <Grid item xs={12} md={4}> 
-                              <div style={{marginTop:'30px'}}>
+                    <h1 style={{color:'#003542', fontFamily:"Comic Sans MS", fontSize:"30px"}}>Event Details</h1>
+                    <h1 style={{color:'#BF9000', fontFamily:"Comic Sans MS", fontSize:"20px", borderBottom:'2px Solid', width:"140px"}}>Event Details</h1>
+                    <form style={{width:"100%"}} >     
+                        <Grid container spacing={5}>
+                            <Grid item xs={12} md={4}> 
+                                <div style={{marginTop:'30px'}}>
+                                    <TextField 
+                                        required label="Event Name"
+                                        readonly  
+                                        value={eventDetails?eventDetails.event_name:''} 
+                                        style={{ width:"100%", color:'black'}}
+                                    />
+                                </div>                  
+                            </Grid>
+                            <Grid item xs={12} md={2}> 
+                                <div style={{marginTop:'30px'}}>
                                   <TextField 
-                                      required label="Event Name"
+                                      required label="From Date"
                                       readonly  
-                                      value={eventDetails?eventDetails.event_name:''} 
-                                      style={{ width:"100%", color:'black'}}
+                                      value={eventDetails?eventDetails.from_date.slice(0,10):''} 
+                                      style={{ width:"100%"}}
                                   />
-                              </div>                  
-                          </Grid>
-                          <Grid item xs={12} md={2}> 
-                              <div style={{marginTop:'30px'}}>
+                                </div>                  
+                            </Grid>
+                            <Grid item xs={12} md={2}>
+                                <div style={{marginTop:'30px'}}>
                                 <TextField 
-                                    required label="From Date"
-                                    readonly  
-                                    value={eventDetails?eventDetails.from_date.slice(0,10):''} 
-                                    style={{ width:"100%"}}
-                                />
-                              </div>                  
-                          </Grid>
-                          <Grid item xs={12} md={2}>
-                              <div style={{marginTop:'30px'}}>
-                              <TextField 
-                                    required label="From Time"
-                                    readonly  
-                                    value={eventDetails?eventDetails.from_time:''} 
-                                    style={{ width:"100%"}}
-                                />
-                              </div>
-                          </Grid>
-                          <Grid item xs={12} md={2}> 
-                          <div style={{marginTop:'30px'}}>
-                                <TextField 
-                                    required label="To Date"
-                                    readonly  
-                                    value={eventDetails?eventDetails.to_date.slice(0,10):''} 
-                                    style={{ width:"100%"}}
-                                />
-                              </div>                  
-                          </Grid>
-                          <Grid item xs={12} md={2}>
-                              <div style={{marginTop:'30px'}}>
-                                <TextField 
-                                    required label="To Time"
-                                    readonly  
-                                    value={eventDetails?eventDetails.to_time:''} 
-                                    style={{ width:"100%"}}
-                                />
-                              </div>
-                           
-                          </Grid>
-                          <Grid item xs={12} md={4}> 
+                                      required label="From Time"
+                                      readonly  
+                                      value={eventDetails?eventDetails.from_time:''} 
+                                      style={{ width:"100%"}}
+                                  />
+                                </div>
+                            </Grid>
+                            <Grid item xs={12} md={2}> 
                             <div style={{marginTop:'30px'}}>
-                              <TextField 
-                                  required label="Event Categories"
-                                  readonly  
-                                  value={eventDetails?eventDetails.event_category_title:''} 
-                                  style={{ width:"100%"}}
-                              />
-                            </div> 
-                          </Grid>
-                          {eventDetails && eventDetails.other_category_description?<Grid item xs={12} md={4}> 
-                              <div style={{marginTop:'30px'}}>
                                   <TextField 
-                                  required 
-                                  readonly
-                                  label="Other Category Description"
-                                  value={eventDetails.other_category_description} 
-                                  style={{ width:"100%"}}
+                                      required label="To Date"
+                                      readonly  
+                                      value={eventDetails?eventDetails.to_date.slice(0,10):''} 
+                                      style={{ width:"100%"}}
                                   />
-                              </div>                  
-                          </Grid>:null}
-                          <Grid item xs={12} md={4}>
+                                </div>                  
+                            </Grid>
+                            <Grid item xs={12} md={2}>
+                                <div style={{marginTop:'30px'}}>
+                                  <TextField 
+                                      required label="To Time"
+                                      readonly  
+                                      value={eventDetails?eventDetails.to_time:''} 
+                                      style={{ width:"100%"}}
+                                  />
+                                </div>
+                             
+                            </Grid>
+                            <Grid item xs={12} md={4}> 
                               <div style={{marginTop:'30px'}}>
                                 <TextField 
-                                  required label="Event Type"
-                                  readonly  
-                                  value={eventDetails?eventDetails.event_type:''} 
-                                  style={{ width:"100%"}}
+                                    required label="Event Categories"
+                                    readonly  
+                                    value={eventDetails?eventDetails.event_category_title:''} 
+                                    style={{ width:"100%"}}
                                 />
-                              </div>
-                          </Grid>
-                          {eventDetails && eventDetails.proposed_venue?<Grid item xs={12} md={4}> 
-                              <div style={{marginTop:'30px'}}>
+                              </div> 
+                            </Grid>
+                            {eventDetails && eventDetails.other_category_description?<Grid item xs={12} md={4}> 
+                                <div style={{marginTop:'30px'}}>
+                                    <TextField 
+                                    required 
+                                    readonly
+                                    label="Other Category Description"
+                                    value={eventDetails.other_category_description} 
+                                    style={{ width:"100%"}}
+                                    />
+                                </div>                  
+                            </Grid>:null}
+                            <Grid item xs={12} md={4}>
+                                <div style={{marginTop:'30px'}}>
                                   <TextField 
-                                  required 
-                                  readonly
-                                  value={eventDetails.proposed_venue}
-                                  label="Proposed Venue" 
-                                  style={{ width:"100%"}}
+                                    required label="Event Type"
+                                    readonly  
+                                    value={eventDetails?eventDetails.event_type:''} 
+                                    style={{ width:"100%"}}
                                   />
-                              </div>                  
-                          </Grid>:<Grid item xs={12} md={4}> 
-                              <div style={{marginTop:'30px'}}>
-                                  <TextField 
-                                  required 
-                                  readonly
-                                  value={eventDetails?eventDetails.link:''}
-                                  label="Link" 
-                                  style={{ width:"100%"}}
-                                  />
-                              </div>                  
-                          </Grid>}
-                          <Grid item xs={12} md={4}> 
-                              <div style={{marginTop:'30px'}}>
-                                  <TextField 
-                                  required 
-                                  label="No. of Days" 
-                                  value={eventDetails?eventDetails.no_of_days:''} 
-                                  readonly s
-                                  tyle={{ width:"100%"}}/>
-                              </div>                  
-                          </Grid>
-                          <Grid item xs={12} md={4}> 
-                              <div style={{marginTop:'30px'}}>
-                                  <TextField 
-                                  required 
-                                  readonly
-                                  value={eventDetails?eventDetails.number_of_expected_guest:''}
-                                  label="Number of expected guests"  
-                                  style={{ width:"100%"}}
-                                  />
-                              </div>                  
-                          </Grid>
-                      </Grid>
-                  </div>:''} 
-                  
-                  {showEventPurpose?
-                  <div style={{width:'100%'}}>
+                                </div>
+                            </Grid>
+                            {eventDetails && eventDetails.proposed_venue?<Grid item xs={12} md={4}> 
+                                <div style={{marginTop:'30px'}}>
+                                    <TextField 
+                                    required 
+                                    readonly
+                                    value={eventDetails.proposed_venue}
+                                    label="Proposed Venue" 
+                                    style={{ width:"100%"}}
+                                    />
+                                </div>                  
+                            </Grid>:<Grid item xs={12} md={4}> 
+                                <div style={{marginTop:'30px'}}>
+                                    <TextField 
+                                    required 
+                                    readonly
+                                    value={eventDetails?eventDetails.link:''}
+                                    label="Link" 
+                                    style={{ width:"100%"}}
+                                    />
+                                </div>                  
+                            </Grid>}
+                            <Grid item xs={12} md={4}> 
+                                <div style={{marginTop:'30px'}}>
+                                    <TextField 
+                                    required 
+                                    label="No. of Days" 
+                                    value={eventDetails?eventDetails.no_of_days:''} 
+                                    readonly s
+                                    tyle={{ width:"100%"}}/>
+                                </div>                  
+                            </Grid>
+                            <Grid item xs={12} md={4}> 
+                                <div style={{marginTop:'30px'}}>
+                                    <TextField 
+                                    required 
+                                    readonly
+                                    value={eventDetails?eventDetails.number_of_expected_guest:''}
+                                    label="Number of expected guests"  
+                                    style={{ width:"100%"}}
+                                    />
+                                </div>                  
+                            </Grid>
+                            <Grid item xs={12} md={12}>
+                            <div>
+                                <h3 style={{fontFamily:"MV Boli", fontWeight:"bold", marginTop:"20px", color:'#BF9000'}}>Images:</h3>
+                                <div className="result">{eventImages?renderPhotos(eventImages):null}</div>
+                            </div>
+                            </Grid>
+                            {/* 
+                            <Grid item xs={12} md={12}>
+                            <div>
+                                <input type="file" id="file" multiple onChange={handleImageChange} />
+                                <h3 style={{fontFamily:"MV Boli", fontWeight:"bold", marginTop:"20px", color:'#BF9000'}}>Insert Images:</h3>
+                                <div className="label-holder">
+                                
+                                    <label htmlFor="file" className="label">
+                                        
+                                        <i className="material-icons">add_a_photo</i>
+                                    </label>
+                                </div>
+                                <div className="result">{renderPhotos(selectedFiles)}</div>
+                            </div>
+                            </Grid> */}
+                            
+                        </Grid>
+                        
                         <h1 style={{color:'#BF9000', fontFamily:"Comic Sans MS", fontSize:"20px", marginTop:'50px', borderBottom:'2px Solid', width:"150px"}}>Event Purpose</h1>
-                  <Grid container spacing={5}>
+                        <Grid container spacing={5}>
                           <Grid item xs={12} md={12}>
                               <div style={{marginTop:'30px'}}>
                                   <h4 style={{color:'gray'}}>Strategic Objectves / Expected Outcomes:</h4>
@@ -479,11 +427,8 @@ const EventDetails = ({ match }) => {
                                 </div>
                             </Grid>
                         </Grid>
-                  </div>:''}
 
-                  {showEventCoordination?
-                  <div style={{width:'100%'}}>
-                  <h1 style={{color:'#BF9000', fontFamily:"Comic Sans MS", fontSize:"20px", marginTop:'60px', borderBottom:'2px Solid', width:"200px"}}>Event Coordination</h1>
+                        <h1 style={{color:'#BF9000', fontFamily:"Comic Sans MS", fontSize:"20px", marginTop:'60px', borderBottom:'2px Solid', width:"200px"}}>Event Coordination</h1>
                         <Grid container spacing={5}>
                             <Grid item xs={12} md={8}>
                                 <div style={{marginTop:'30px'}}>
@@ -540,16 +485,9 @@ const EventDetails = ({ match }) => {
                                 </div> 
                             </Grid>
                           </Grid>
-                  </div>:''}
-                  <Grid container spacing={5}>
-                    <Grid item xs={12} md={9}>
-                    </Grid>
-                    <Grid item xs={12} md={3}>
-                      <Button variant="contained" color="primary" type="button" style = {{marginTop:'40px', width:'100%'}}> {eventDetails?eventDetails.ticket_price?'Buy Tickets':'Participate in this Event':''} </Button>
-                    </Grid>
-                  </Grid>
-                  
-                   
+                        {/* 
+                        <Button variant="contained" color="primary" type="submit" style = {{marginTop:'40px', width:'25%'}}> Submit </Button>   */}
+                    </form>
                 </div>
       </div>
     );
@@ -558,4 +496,4 @@ const EventDetails = ({ match }) => {
   }
 };
 
-export default EventDetails;
+export default MyEvents;

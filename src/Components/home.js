@@ -41,12 +41,25 @@ const Home = () => {
         return allOtherEvents && allOtherEvents.map((events,i)=>{
             return(
                 <Grid item xs={12} key={i} md={4} style={{marginTop:'20px'}}>
-                    <Link to={'/myEventDetails/'+events.event_id} style={{textDecoration:'none'}}>
-                        <Card className='items' style={{backgroundColor:'silver'}}>
+                    <Link to={'/eventDetails/'+events.event_id} style={{textDecoration:'none'}}>
+                        <Card style={{backgroundColor:'silver'}}>
                             <CardActionArea>
                                 <CardContent>
-                                    <h2 className='item-name'>{events.event_name}</h2>
-                                    <div className='item-price'>{events.from_date.slice(0,10)} - {events.to_date.slice(0,10)}</div>
+                                    <h1 style={{fontFamily:"Comic Sans MS", marginTop:'0px', textAlign:'center'}}>{events.event_name}</h1>
+                                    <Grid container spacing={2} style={{fontFamily:"MV Boli"}}>
+                                        <Grid item xs={12} md={6} >
+                                            <b>From: </b>{events.from_date.slice(0,10)}
+                                        </Grid>
+                                        <Grid item xs={12} md={6} >
+                                            <b>To: </b>{events.to_date.slice(0,10)}
+                                        </Grid>
+                                        <Grid item xs={12} md={6}>
+                                        <b>Ticket Price: </b>{events.ticket_price?events.ticket_price:'Free'}
+                                        </Grid>
+                                        <Grid item xs={12} md={6}>
+                                        <b>Available Ticket: </b>{events.ticket_limit}
+                                        </Grid>
+                                    </Grid>
                                 </CardContent>
                             </CardActionArea>
                         </Card>

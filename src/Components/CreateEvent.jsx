@@ -123,7 +123,7 @@ const CreateEvent = ({ match }) => {
     other_category_description:'',
     event_type:eventTypeOptions,
     proposed_venue: '',
-    ticket_type:'',
+    ticket_type:ticketTypeOptions,
     ticket_limit:'',
     link:'',
     no_of_days:noOfDays,
