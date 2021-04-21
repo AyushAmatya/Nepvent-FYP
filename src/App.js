@@ -13,6 +13,7 @@ import MyEventDetails from './Components/MyEventDetails.jsx';
 import EventDetails from './Components/EventDetails.jsx';
 import 'react-toastify/dist/ReactToastify.css';
 import ViewProfile from './Components/ViewProfile.jsx';
+import MyTickets from './Components/MyTickets.jsx';
 import { ToastContainer, toast } from 'react-toastify';
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
           <Route path = "/createEvent" exact render = {props =><CreateEvent {...props}/>}/>
           <Route path = "/viewProfile" exact render = {props =><ViewProfile {...props}/>}/>
           <Route path = "/myEvents" exact render = {props =><MyEvents {...props}/>}/>
+          <Route path = "/myTickets" exact render = {props =><MyTickets {...props}/>}/>
           <Route path = "/myEventDetails/:event_id?" exact render = {props =><MyEventDetails {...props}/>}/>
           <Route path = "/eventDetails/:event_id?" exact render = {props =><EventDetails {...props}/>}/>
           <Route path = "/" exact component={Home}/>

@@ -81,7 +81,7 @@ function LoggedIn(props){
       >
         <MenuItem style={{borderBottom: '1px Solid', fontWeight:'bold', backgroundColor:'whitesmoke'}}>Menu:</MenuItem>
         <MenuItem onClick={handleMenuClose}>Calendar</MenuItem>
-        <MenuItem onClick={handleMenuClose}>My Tickets</MenuItem>
+        <MenuItem onClick={handleMenuClose}><Link className="linkRemoveStyle" to='/myTickets'>My Tickets</Link></MenuItem>
         <MenuItem onClick={handleMenuClose}><Link className="linkRemoveStyle" to='/myEvents'>My Events</Link></MenuItem>
         <MenuItem onClick={handleMenuClose}><Link className="linkRemoveStyle" to='/createEvent'>Create Events</Link></MenuItem>
       </Menu>

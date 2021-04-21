@@ -13,7 +13,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import Nav from './nav.js';
 import DateFnsUtils from '@date-io/date-fns';
 import Popup from 'reactjs-popup';
-import QRCode from 'react-qr-code';
+
 
 import item1 from '../img/item1.jpg'
 import item2 from '../img/item2.jpg'
@@ -38,7 +38,7 @@ import {
 
 
 
-const EventDetails = ({ match }) => {
+const EventDetails = ({ match, history }) => {
   
 
   // const [allEventData, setAllEventData]= useState({
@@ -131,17 +131,29 @@ const EventDetails = ({ match }) => {
       const attended = 'N';
       const event_id = eventId;
       const ticket_id = ticketId;
+      const event_name = eventDetails.event_name;
+      const from_date = eventDetails.from_date.slice(0,10);
+      const from_time = eventDetails.from_time;
+      const to_date = eventDetails.to_date.slice(0,10);
+      const to_time = eventDetails.to_time;
       axios.post(`${process.env.REACT_APP_EVENT_API_URL}/addTickets`, {
         user_id,
         attended,
         event_id,
-        ticket_id
+        ticket_id,
+        event_name,
+        from_date,
+        from_time,
+        to_date,
+        to_time
       })
       .then(res => {
         toast.success(res.data.message);
+        history.push('/myTickets');
       }).catch(err => {
         console.log(err);
       });
+
     }else{
       toast.error("You need to login to use this feature")
     }
@@ -181,9 +193,7 @@ const EventDetails = ({ match }) => {
         </div> */}
         <Nav/>
                 <div className="container2">
-                  {/* <QRCode
-                    value='{name:ayush,address:bkt}'
-                  /> */}
+                  {/*  */}
                 <button type='button' onClick={handleBtnClick}>console all data</button>
                   <Grid container spacing={5}>
                     <Grid item xs={12} md={12}>

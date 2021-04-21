@@ -26,6 +26,36 @@ const eventTicketScheama = new mongoose.Schema(
         trim: true,
         required: true,
         unique: false,
+      },
+      event_name:{
+        type: String,
+        trim: true,
+        required: true,
+        unique: false,
+      },
+      from_date:{
+        type: Date,
+        trim: true,
+        required: true,
+        unique: false
+      },
+      from_time:{
+        type: String,
+        trim: true,
+        required: true,
+        unique: false
+      },
+      to_date:{
+        type: Date,
+        trim: true,
+        required: true,
+        unique: false
+      },
+      to_time:{
+        type: String,
+        trim: true,
+        required: true,
+        unique: false
       }
     },
     {

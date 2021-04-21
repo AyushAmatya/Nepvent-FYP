@@ -245,14 +245,24 @@ exports.addTicketsEventController = (req,res) => {
     user_id,
     attended,
     event_id,
-    ticket_id
+    ticket_id,
+    event_name,
+    from_date,
+    from_time,
+    to_date,
+    to_time
   } = req.body;
 
   const eventTicket = new EventTicket({
     user_id,
     attended,
     event_id,
-    ticket_id
+    ticket_id,
+    event_name,
+    from_date,
+    from_time,
+    to_date,
+    to_time
   });
 
   eventTicket.save((err,event) => {
@@ -275,5 +285,11 @@ exports.addTicketsEventController = (req,res) => {
 exports.getEnrolledController=(req,res)=>{
   EventTicket.find({"user_id":req.body.user_id, "event_id":req.body.event_id})
   .then(event=>res.json(event))
+  .catch(err => res.status(400).json('Error: ' + err));
+}
+
+exports.getMyTicketsController = (req, res) => {
+  EventTicket.find({"user_id":req.body.user_id}).sort({"ticket_id": 1}).collation({locale: "en_US", numericOrdering: true})
+  .then(eventTickets=>res.json(eventTickets))
   .catch(err => res.status(400).json('Error: ' + err));
 }

@@ -21,7 +21,8 @@ const{
     getAllOtherEventsController,
     getMaxTicketIdController,
     addTicketsEventController,
-    getEnrolledController
+    getEnrolledController,
+    getMyTicketsController
 } = require('../controllers/event.controller.js')
 
 router.post('/add', addEventController);
@@ -38,5 +39,5 @@ router.post('/getAllOtherEvents', getAllOtherEventsController);
 router.get('/getMaxTicketId', getMaxTicketIdController);
 router.post('/addTickets', addTicketsEventController);
 router.post('/getEnrolled', getEnrolledController);
-
+router.post('/getMyTickets', getMyTicketsController);
 module.exports = router;
