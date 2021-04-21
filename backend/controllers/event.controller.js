@@ -1,4 +1,5 @@
 const Event = require('../models/event.model');
+const EventTicket = require('../models/eventTickets.model');
 const EventCoordination = require('../models/eventCoordination.model');
 const EventPurpose = require('../models/eventPurpose.model');
 const EventImage = require('../models/eventImage.model');
@@ -229,6 +230,50 @@ exports.getEventImagesController=(req, res) => {
 }
 exports.getAllOtherEventsController=(req,res)=>{
   Event.find({"user_id":{$ne:req.body.user_id}})
+  .then(event=>res.json(event))
+  .catch(err => res.status(400).json('Error: ' + err));
+}
+exports.getMaxTicketIdController = (req, res) => {
+  EventTicket.find().sort({"ticket_id": -1}).collation({locale: "en_US", numericOrdering: true})
+  .then(events=>res.json(events))
+  .catch(err => res.status(400).json('Error: ' + err));
+}
+
+exports.addTicketsEventController = (req,res) => {
+  console.log(req.body);
+  const {
+    user_id,
+    attended,
+    event_id,
+    ticket_id
+  } = req.body;
+
+  const eventTicket = new EventTicket({
+    user_id,
+    attended,
+    event_id,
+    ticket_id
+  });
+
+  eventTicket.save((err,event) => {
+    if(err){
+      console.log(err);
+      console.log('Save error', errorHandler(err));
+      return res.status(401).json({
+        errors: errorHandler(err)
+      });
+    }else{
+      return res.json({
+        success: true,
+        eventTicket: eventTicket,
+        message: 'Event Ticket purchase success'
+      });
+    }
+  })
+}
+
+exports.getEnrolledController=(req,res)=>{
+  EventTicket.find({"user_id":req.body.user_id, "event_id":req.body.event_id})
   .then(event=>res.json(event))
   .catch(err => res.status(400).json('Error: ' + err));
 }

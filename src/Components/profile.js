@@ -81,7 +81,7 @@ function LoggedIn(props){
       >
         
         <MenuItem style={{borderBottom: '1px Solid', fontWeight:'bold', backgroundColor:'whitesmoke'}}>Profile:</MenuItem>
-        <MenuItem onClick={handleProfileClose}><Link className="linkRemoveStyle" to={viewProfile}>View Profile</Link></MenuItem>
+        <MenuItem onClick={handleProfileClose}><Link className="linkRemoveStyle" to='viewProfile'>View Profile</Link></MenuItem>
         <MenuItem onClick={handleProfileClose}><Link className="linkRemoveStyle" to='/login'>Edit Profile</Link></MenuItem>
         <MenuItem onClick={handleLogout}><Link className="linkRemoveStyle" to='/'>Logout</Link></MenuItem>
         

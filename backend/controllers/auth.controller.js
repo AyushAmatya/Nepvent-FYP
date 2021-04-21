@@ -327,3 +327,14 @@ exports.resetPasswordController = (req, res) => {
   }
 };
 
+exports.updateProfileDetailsController = (req, res) => {
+  User.updateOne({'email':req.body.email},{$set:req.body,$currentDate: { "lastModified": true }})
+  .then(sent => {
+    return res.json({
+      data:req.body,
+      message: `Your profile has been sucessfully updated`
+    });
+  })
+  .catch(err => res.status(400).json('Error: ' + err));
+}
+

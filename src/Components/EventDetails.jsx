@@ -13,6 +13,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import Nav from './nav.js';
 import DateFnsUtils from '@date-io/date-fns';
 import Popup from 'reactjs-popup';
+import QRCode from 'react-qr-code';
 
 import item1 from '../img/item1.jpg'
 import item2 from '../img/item2.jpg'
@@ -51,10 +52,34 @@ const EventDetails = ({ match }) => {
   const [eventCoordiation, setEventCoordiation] = useState();
   const [eventImages, setEventImages] = useState();
   const [eventId, setEventId] = useState();
+  const [ticketId, setTicketId] = useState();
+  const [enrolled, setEnrolled] = useState(false);
   useEffect(() => {
     let eventId = match.params.event_id;
     setEventId(eventId);
     if(eventId){
+      if(isAuth()){
+        const user_id = JSON.parse(localStorage.getItem('user'))['_id'];
+        axios.post(`${process.env.REACT_APP_EVENT_API_URL}/getEnrolled`,{user_id:user_id, event_id:eventId})
+        .then(res => {
+          if(res.data.length != 0){
+            setEnrolled(true);
+          }else{
+            setEnrolled(false);
+          }
+        })
+      }
+      axios.get(`${process.env.REACT_APP_EVENT_API_URL}/getMaxTicketId`)
+        .then(res => {
+            if(res.data.length != 0){
+                console.log(res.data)
+                const ticketId = Number(res.data[0].ticket_id) + 1;
+                setTicketId(ticketId);
+            }else{
+              const ticketId = 1;
+              setTicketId(ticketId);
+            }
+          })
       axios.post(`${process.env.REACT_APP_EVENT_API_URL}/getEventDteails`, {event_id:eventId})
       .then(res => {
         const eventDetails = res.data[0];
@@ -100,6 +125,28 @@ const EventDetails = ({ match }) => {
     console.log(eventImages);
   }
 
+  const handleBuyBtnClick = () => {
+    if(isAuth()){
+      const user_id = JSON.parse(localStorage.getItem('user'))['_id'];
+      const attended = 'N';
+      const event_id = eventId;
+      const ticket_id = ticketId;
+      axios.post(`${process.env.REACT_APP_EVENT_API_URL}/addTickets`, {
+        user_id,
+        attended,
+        event_id,
+        ticket_id
+      })
+      .then(res => {
+        toast.success(res.data.message);
+      }).catch(err => {
+        console.log(err);
+      });
+    }else{
+      toast.error("You need to login to use this feature")
+    }
+  }
+
   const renderPhotos = (source) => {
     return source.map((photo) => {
         return <img src={photo.path} alt="" key={photo.path} style={{width:'334px',height:'190px',objectFit:'cover',padding:'0.75rem'}} />;
@@ -134,7 +181,9 @@ const EventDetails = ({ match }) => {
         </div> */}
         <Nav/>
                 <div className="container2">
-                  
+                  {/* <QRCode
+                    value='{name:ayush,address:bkt}'
+                  /> */}
                 <button type='button' onClick={handleBtnClick}>console all data</button>
                   <Grid container spacing={5}>
                     <Grid item xs={12} md={12}>
@@ -545,7 +594,7 @@ const EventDetails = ({ match }) => {
                     <Grid item xs={12} md={9}>
                     </Grid>
                     <Grid item xs={12} md={3}>
-                      <Button variant="contained" color="primary" type="button" style = {{marginTop:'40px', width:'100%'}}> {eventDetails?eventDetails.ticket_price?'Buy Tickets':'Participate in this Event':''} </Button>
+                      <Button disabled={enrolled?'disabled':''} variant="contained" color="primary" type="button" onClick={handleBuyBtnClick} style = {{marginTop:'40px', width:'100%'}}> {enrolled?'Already Enrolled':eventDetails?eventDetails.ticket_price?'Buy Tickets':'Participate in this Event':''} </Button>
                     </Grid>
                   </Grid>
                   

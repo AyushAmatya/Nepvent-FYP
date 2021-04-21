@@ -74,9 +74,14 @@ const Home = () => {
             <Nav/>
             
             <div className="container">
+            <h1 style={{color:'#BF9000', fontFamily:"Comic Sans MS", fontSize:"20px", borderBottom:'2px Solid', width:"185px"}}>Upcomming Events</h1>
+
                 <Grid container spacing={2}>
                     {renderAllOtherEvents(allOtherEvents)}
                 </Grid>
+            <h1 style={{color:'#BF9000', fontFamily:"Comic Sans MS", fontSize:"20px", borderBottom:'2px Solid', width:"155px"}}>Ongoing Events</h1>
+            <h1 style={{color:'#BF9000', fontFamily:"Comic Sans MS", fontSize:"20px", borderBottom:'2px Solid', width:"120px"}}>Past Events</h1>
+            
             </div>
         </div>
     )
