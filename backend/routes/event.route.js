@@ -1,12 +1,6 @@
 const router = require('express').Router();
 const store = require('../middleware/multer')
 
-// validation 
-// const {
-//     validAddEvent
-// } = require('../helpers/valid')
-  
-//load controllers
 const{
     addEventController,
     getMaxIdController,
@@ -22,7 +16,8 @@ const{
     getMaxTicketIdController,
     addTicketsEventController,
     getEnrolledController,
-    getMyTicketsController
+    getMyTicketsController,
+    getTotalSoldTicketController
 } = require('../controllers/event.controller.js')
 
 router.post('/add', addEventController);
@@ -40,4 +35,5 @@ router.get('/getMaxTicketId', getMaxTicketIdController);
 router.post('/addTickets', addTicketsEventController);
 router.post('/getEnrolled', getEnrolledController);
 router.post('/getMyTickets', getMyTicketsController);
+router.post('/getTotalSoldTicket', getTotalSoldTicketController);
 module.exports = router;

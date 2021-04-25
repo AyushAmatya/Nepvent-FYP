@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import authSvg from '../assests/auth.svg';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import {  isAuth } from '../helpers/auth';
@@ -70,14 +69,6 @@ const Register = () => {
             toast.success(res.data.message);
           })
           .catch(err => {
-            // setFormData({
-            //   ...formData,
-            //   name: '',
-            //   email: '',
-            //   password1: '',
-            //   password2: '',
-            //   textChange: 'Sign Up'
-            // });
             toast.error(err.response.data.errors);
           });
       } else {

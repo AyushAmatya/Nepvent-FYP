@@ -1,11 +1,10 @@
-import React, { Component, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import './myStyle.css';
 import {Grid, Card, CardActionArea, CardContent} from '@material-ui/core';
 import Nav from './nav.js';
-import { isAuth } from '../helpers/auth';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import axios from 'axios';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 const Home = () => {
@@ -39,6 +38,7 @@ const Home = () => {
 
     const renderAllOtherEvents=(allOtherEvents)=>{
         return allOtherEvents && allOtherEvents.map((events,i)=>{
+
             return(
                 <Grid item xs={12} key={i} md={4} style={{marginTop:'20px'}}>
                     <Link to={'/eventDetails/'+events.event_id} style={{textDecoration:'none'}}>

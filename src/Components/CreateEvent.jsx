@@ -2,20 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
-import jwt from 'jsonwebtoken';
-import { authenticate, isAuth, getCookie } from '../helpers/auth';
-import { Link, Redirect } from 'react-router-dom';
-import LogoBlack from '../img/logoBlack.jpg';
 import '../App.css';
 import './registerStyle.css';
-import { blue } from '@material-ui/core/colors';
 import {TextField, Button, Grid, TextareaAutosize } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Nav from './nav.js';
 import DateFnsUtils from '@date-io/date-fns';
-// import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
-// import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
-// import TimePicker from '@material-ui/lab/TimePicker';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -52,12 +44,6 @@ const type = [{ title: 'Seminars', category: 'Corporate events' },
   { title: 'Other', category: 'Pop-up events' }                    
 ];
 
-function handleCancle(){
-    window.location='/';
-}
-function handleRegister(){
-    window.location='/register';
-}
 const optionForEventType = ['Online', 'On Site'];
 
 const optionForTicketType = ['Paid', 'Free'];
@@ -260,7 +246,6 @@ const CreateEvent = ({ match }) => {
         setEventDetailsData({ ...eventDetailsData, from_time});
     }    
   }
-//   'Corporate events', 'Social events', 'Virtual events', 'Fundraising events', 'Festivals', 'Community events', 'Pop-up events'
   const optionsEventCategories = type.map((option) => {
     const category = option.category;
     return {

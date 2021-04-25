@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
-import { authenticate, isAuth } from '../helpers/auth';
-import { Link, Redirect } from 'react-router-dom';
+import { isAuth } from '../helpers/auth';
+import { Redirect } from 'react-router-dom';
 import LogoBlack from '../img/logoBlack.jpg';
 import '../App.css';
 import './registerStyle.css';
-import { blue } from '@material-ui/core/colors';
-import {TextField, Button} from '@material-ui/core';
+import {Button} from '@material-ui/core';
 
 function handleCancle(){
     window.location='/';

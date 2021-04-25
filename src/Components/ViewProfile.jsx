@@ -1,42 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import jwt from 'jsonwebtoken';
-import { authenticate, isAuth, getCookie, setLocalStorage, removeLocalStorage } from '../helpers/auth';
-import { Link, Redirect } from 'react-router-dom';
-import LogoBlack from '../img/logoBlack.jpg';
+import { setLocalStorage, removeLocalStorage } from '../helpers/auth';
 import '../App.css';
 import './registerStyle.css';
-import { blue } from '@material-ui/core/colors';
-import {TextField, Button, Grid, TextareaAutosize, Card, CardActionArea, CardContent} from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import {TextField, Button, Grid} from '@material-ui/core';
 import Nav from './nav.js';
 import EditIcon from '@material-ui/icons/Edit';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
 
-// import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
-// import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
-// import TimePicker from '@material-ui/lab/TimePicker';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
-
-
-
-
 const ViewProfile = ({ match }) => {
 
-  // const [formData, setFormData] = useState({
-  //   first_name: '',
-  //   middle_name: '',
-  //   last_name: '',
-  //   address: '',
-  //   number: '',
-  //   email: ''
-  // });
-  
   const [userData, setUserData] = useState({
       first_name: '',
       middle_name: '',
@@ -59,11 +34,6 @@ const ViewProfile = ({ match }) => {
     const _id = JSON.parse(localStorage.getItem('user'))['_id'];
     setUserData({...userData, first_name, middle_name, last_name, address, number, email, role, _id});
   }, []);
-
-  const handleClick=()=>{
-    console.log(userData);
-    console.log('haha');
-  }
 
   const [isDisabled, setIsDisabled] = useState(true);
 
@@ -99,7 +69,6 @@ const ViewProfile = ({ match }) => {
         
         <Nav/>
         <div className="container2">
-          {/* <button onClick={handleClick}>lol</button> */}
           <h1 style={{color:'#003542', fontFamily:"Comic Sans MS", fontSize:"30px"}}>My Profile </h1>
           {isDisabled?
           <Button  color="primary" style={{float:'right'}} onClick={handleEditCLick}><EditIcon color="primary" style={{marginRight:'10px'}}/>Edit Profile </Button>
@@ -113,17 +82,12 @@ const ViewProfile = ({ match }) => {
             <Grid container spacing={5}>
               <Grid item xs={12} md={4}>
                 <TextField style={{width:"100%"}}
-                  // error
                   required
                   disabled = {isDisabled?'disabled':''}
                   value={userData?userData.first_name:''}
-                  // onChange={handleChange('first_name')}
-                  // id="standard-error-helper-text"
                   id = "standard-required"
                   label="First Name"
                   onChange={handleChange('first_name')}
-                  // defaultValue="Hello World"
-                  // helperText="Incorrect entry."
                 />
               </Grid>
               <Grid item xs={12} md={4}>

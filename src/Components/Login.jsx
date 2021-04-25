@@ -23,51 +23,6 @@ const Login = ({ history }) => {
     setFormData({ ...formData, [text]: e.target.value });
   };
 
-  // const sendGoogleToken = tokenId => {
-  //   axios
-  //     .post(`${process.env.REACT_APP_API_URL}/googlelogin`, {
-  //       idToken: tokenId
-  //     })
-  //     .then(res => {
-  //       console.log(res.data);
-  //       informParent(res);
-  //     })
-  //     .catch(error => {
-  //       console.log('GOOGLE SIGNIN ERROR', error.response);
-  //     });
-  // };
-  // const informParent = response => {
-  //   authenticate(response, () => {
-  //     isAuth() && isAuth().role === 'admin'
-  //       ? history.push('/admin')
-  //       : history.push('/private');
-  //   });
-  // };
-
-  // const sendFacebookToken = (userID, accessToken) => {
-  //   axios
-  //     .post(`${process.env.REACT_APP_API_URL}/facebooklogin`, {
-  //       userID,
-  //       accessToken
-  //     })
-  //     .then(res => {
-  //       console.log(res.data);
-  //       informParent(res);
-  //     })
-  //     .catch(error => {
-  //       console.log('GOOGLE SIGNIN ERROR', error.response);
-  //     });
-  // };
-  // const responseGoogle = response => {
-  //   console.log(response);
-  //   sendGoogleToken(response.tokenId);
-  // };
-
-  // const responseFacebook = response => {
-  //   console.log(response);
-  //   sendFacebookToken(response.userID, response.accessToken)
-  // };
-
   const handleSubmit = e => {
     console.log(process.env.REACT_APP_API_URL);
     e.preventDefault();
@@ -83,9 +38,6 @@ const Login = ({ history }) => {
             isAuth() && isAuth().role === 'admin'
               ? history.push('/admin')
               : history.push('/');
-            // isAuth()
-            // ? history.push(`/`)
-            // : history.push('/');
             setFormData({
               ...formData,
               email: '',
@@ -110,7 +62,6 @@ const Login = ({ history }) => {
   };
   return (
     <div>
-      {/* {isAuth() ? <Redirect to='/' /> : null} */}
         <div className="formContainer">
             <div style={{display:"flex", textAlign:"left"}}>
                 <img src={LogoBlack} alt="logo" className="formLogo"/>

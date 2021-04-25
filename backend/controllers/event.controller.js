@@ -19,13 +19,6 @@ const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.MAIL_KEY);
 
 exports.addEventController = (req,res) => {
-  // const errors = validationResult(req);
-  // if (!errors.isEmpty()) {
-  //   const firstError = errors.array().map(error => error.msg)[0];
-  //   return res.status(422).json({
-  //     errors: firstError
-  //   });
-  // } else {
     const { user_id,event_name,
     from_date,
     event_id,
@@ -291,5 +284,11 @@ exports.getEnrolledController=(req,res)=>{
 exports.getMyTicketsController = (req, res) => {
   EventTicket.find({"user_id":req.body.user_id}).sort({"ticket_id": 1}).collation({locale: "en_US", numericOrdering: true})
   .then(eventTickets=>res.json(eventTickets))
+  .catch(err => res.status(400).json('Error: ' + err));
+}
+
+exports.getTotalSoldTicketController = (req, res) => {
+  EventTicket.find({"event_id": req.body.event_id})
+  .then(eventTicket=>res.json(eventTicket.length))
   .catch(err => res.status(400).json('Error: ' + err));
 }

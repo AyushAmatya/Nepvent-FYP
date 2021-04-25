@@ -1,57 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
 import axios from 'axios';
-import jwt from 'jsonwebtoken';
-import { authenticate, isAuth, getCookie } from '../helpers/auth';
-import { Link, Redirect } from 'react-router-dom';
-import LogoBlack from '../img/logoBlack.jpg';
 import '../App.css';
 import './registerStyle.css';
-import { blue } from '@material-ui/core/colors';
-import {TextField, Button, Grid, TextareaAutosize, Card, CardActionArea, CardContent} from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import {Button, Grid} from '@material-ui/core';
 import Nav from './nav.js';
-import DateFnsUtils from '@date-io/date-fns';
 import QRCode from 'qrcode.react';
-import item1 from '../img/item1.jpg'
-import item2 from '../img/item2.jpg'
-import item3 from '../img/item3.jpg'
-import item4 from '../img/item4.jpg'
-import item5 from '../img/item5.jpg'
-import item6 from '../img/item6.jpg'
-import item7 from '../img/item7.jpg'
-import item8 from '../img/item8.jpg'
-import item9 from '../img/item9.jpg'
-import item10 from '../img/item10.jpg'
-import item11 from '../img/item11.jpg'
-import item12 from '../img/item12.jpg'
-
-// import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
-// import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
-// import TimePicker from '@material-ui/lab/TimePicker';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
-
-
-
 
 const EventTickets = ({ match }) => {
-  
-
   
   const [myEventDetails, setMyEventDetails] = useState([]);
   const [imageList, setImageList] = useState([[]]);
   const [eventId, setEventId] = useState();
   const [myTickets, setMyTickets] = useState([]);
+  const [ticketEmpty, setTicketEmpty] = useState(true);
   useEffect(() => {
     const user_id = JSON.parse(localStorage.getItem('user'))['_id'];
     if(user_id){
       axios.post(`${process.env.REACT_APP_EVENT_API_URL}/getMyTickets`,{user_id:user_id})
       .then(res => {
         if(res.data.length != 0){
+          setTicketEmpty(false);
           setMyTickets(res.data);
+        }else{
+          setTicketEmpty(true);
         }
       })
       .catch(err => {
@@ -69,6 +40,7 @@ const EventTickets = ({ match }) => {
         axios.post(`${process.env.REACT_APP_EVENT_API_URL}/getMyEvents`, {user_id:user_id})
         .then(res => {
             if(res.data.length != 0){
+                
                 const myEventDetails = res.data;
                 setMyEventDetails(myEventDetails);
                 setImageList([]);
@@ -152,6 +124,8 @@ const EventTickets = ({ match }) => {
         <Nav/>
         <div className="container2">
         {/* <button onClick={handleClick}>lol</button> */}
+        {ticketEmpty?<h1 style={{color:'#003542', fontFamily:"Comic Sans MS", fontSize:"30px"}}>No Ticket Purchased </h1>:
+          <div>
           <h1 style={{color:'#003542', fontFamily:"Comic Sans MS", fontSize:"30px"}}>My Events Tickets </h1>
           <Grid container spacing={2}>
             <Grid xs={12} md={3} style={{marginTop:'20px'}}>
@@ -168,8 +142,8 @@ const EventTickets = ({ match }) => {
             </Grid>
           </Grid>
           {renderTickets(myTickets)}
-           
-            
+          </div>
+}
         </div>
                 
       </div>
